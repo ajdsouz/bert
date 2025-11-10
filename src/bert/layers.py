@@ -19,14 +19,18 @@ class MultiHeadAttention(nn.Module):
     def __init__(self, d_model, n_heads, log_attention=False):
         self.d_model = d_model
         self.n_heads = n_heads
+        self.d_heads = self.d_model // self.n_heads
         self.log_attention = log_attention
         self.softmax = nn.Softmax(dim=-1)
-        self.out_proj = nn.Linear(d_model, d_model)
+        self.out_proj = nn.Linear(self.d_model, self.d_model)
+        self.Wq = nn.Linear(self.d_heads, self.d_heads)
+        self.Wk = nn.Linear(self.d_heads, self.d_heads)
+        self.Wv = nn.Linear(self.d_heads, self.d_heads)
     
     def forward(self, x):
-        q = split_heads(x, self.n_heads)
-        k = split_heads(x, self.n_heads)
-        v = split_heads(x, self.n_heads)
+        q = split_heads(self.Wq(x), self.n_heads)
+        k = split_heads(self.Wk(x), self.n_heads)
+        v = split_heads(self.Wv(x), self.n_heads)
 
         attention_weights = attention(q, k, v)
 
@@ -46,9 +50,9 @@ class EmbeddingLayer(nn.Module):
         return math.sqrt(self.d_model) * embeddings
 
 class SinusoidalPositionalEncoding(nn.Module):
-    def __init__(self):
+    def __init__(self, d_model, block_size):
         super().__init__()
-        pass
+        
 
     def forward(self):
         pass
