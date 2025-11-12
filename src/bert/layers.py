@@ -35,9 +35,9 @@ class MultiHeadAttention(nn.Module):
         self.log_attention : bool = log_attention
         self.softmax = nn.Softmax(dim=-1)
         self.out_proj: nn.Linear = nn.Linear(self.d_model, self.d_model)
-        self.Wq : nn.Linear = nn.Linear(self.d_heads, self.d_heads)
-        self.Wk : nn.Linear = nn.Linear(self.d_heads, self.d_heads)
-        self.Wv : nn.Linear= nn.Linear(self.d_heads, self.d_heads)
+        self.Wq : nn.Linear = nn.Linear(self.d_model, self.d_model)
+        self.Wk : nn.Linear = nn.Linear(self.d_model, self.d_model)
+        self.Wv : nn.Linear= nn.Linear(self.d_model, self.d_model)
     
     def forward(self, x: Tensor) -> Tensor:
         """Multi-head attention
@@ -52,9 +52,9 @@ class MultiHeadAttention(nn.Module):
         k = split_heads(self.Wk(x), self.n_heads)
         v = split_heads(self.Wv(x), self.n_heads)
 
-        attention_weights = attention(q, k, v)
+        att, weights = attention(q, k, v)
 
-        attention_out = merge_heads(attention_weights)
+        attention_out = merge_heads(att)
 
         return self.out_proj(attention_out)
     
@@ -85,11 +85,11 @@ class SinusoidalPositionalEncoding(nn.Module):
         div_terms: Tensor = torch.exp(
             torch.arange(0, d_model, 2) * (-torch.log(torch.tensor(10000.0)) / d_model)
         )
-        self.pe: Tensor = torch.zeros(block_size, d_model)
-        self.pe[:,0::2] = torch.sin(position * div_terms)
-        self.pe[:,1::2] = torch.cos(position * div_terms)
+        pe: Tensor = torch.zeros(block_size, d_model)
+        pe[:,0::2] = torch.sin(position * div_terms)
+        pe[:,1::2] = torch.cos(position * div_terms)
 
-        self.register_buffer("pe", self.pe)
+        self.register_buffer("pe", pe.unsqueeze(0))
 
 
     def forward(self, x: Tensor) -> Tensor:
@@ -101,7 +101,7 @@ class SinusoidalPositionalEncoding(nn.Module):
         Returns:
             Tensor: Word embedding + positional information
         """
-        return x + self.pe[:x.size(1), :]
+        return x + self.pe[:, :x.size(1), :]
 
 
 class EncoderLayer(nn.Module):

@@ -9,7 +9,7 @@ def attention(
         value: Tensor, 
         scale: float | None = None, 
         mask : Tensor | None = None
-) -> Tensor:
+) -> tuple[Tensor, Tensor]:
     """Computes attention score as in https://arxiv.org/abs/1706.03762
 
     Args:
@@ -21,7 +21,7 @@ def attention(
         mask (Tensor, optional): mask for masking tokens. Defaults to None.
 
     Returns:
-        Tensor: attention score
+        tuple [Tensor, Tensor]: attention score, attention weights
     """
     if scale is None:
         scale = math.sqrt(key.size(-1))
@@ -29,11 +29,12 @@ def attention(
     scores = (query @ key.transpose(-2, -1)) / scale
 
     if mask is not None:
-        scores.masked_fill_(mask=mask, value=float('-inf'))
-        
-    attention = F.softmax(scores, -1) @ value 
+        scores.masked_fill(mask==0, value=float('-inf'))
+    
+    attention_weights = F.softmax(scores, -1)
+    attention = attention_weights @ value 
 
-    return attention
+    return attention, attention_weights
 
 
 def split_heads(x: Tensor, n_heads: int) -> Tensor:

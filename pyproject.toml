@@ -1,7 +1,7 @@
 [project]
 name = "bert"
 version = "0.1.0"
-description = "Add your description here"
+description = "BERT pretraining in PyTorch"
 readme = "README.md"
 authors = [
     { name = "ajdsouza", email = "aj.anthonydsouza@gmail.com" }
