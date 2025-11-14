@@ -9,3 +9,9 @@ notes/
 
 # Virtual environments
 .venv
+
+# IDE
+.vscode/
+
+# Temporary folders
+tmp/
