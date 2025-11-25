@@ -50,8 +50,8 @@ def memmap_dataset(
         filename = f"data/{split}.tokens"
         memmap_file = np.memmap(filename=filename, dtype=np.uint16, mode='w+', shape=(tensor_length,))
         idx = 0
-        for batch_idx in tqdm(range(64), desc=f"Writing {filename}"):
-            batch = data.shard(64, index=batch_idx, contiguous=True).with_format('numpy')
+        for batch_idx in tqdm(range(BATCH_SIZE), desc=f"Writing {filename}"):
+            batch = data.shard(BATCH_SIZE, index=batch_idx, contiguous=True).with_format('numpy')
             arr_batch = np.concatenate(batch['token_ids'])
             memmap_file[idx:idx+len(arr_batch)] = arr_batch
             idx += len(arr_batch)
