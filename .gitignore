@@ -4,8 +4,15 @@ __pycache__/
 build/
 dist/
 wheels/
+*.tokens
 *.egg-info
 notes/
 
 # Virtual environments
 .venv
+
+# IDE
+.vscode/
+
+# Temporary folders
+tmp/
