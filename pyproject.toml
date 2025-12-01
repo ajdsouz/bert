@@ -44,8 +44,9 @@ build-backend = "uv_build"
 bert = { path = "src" }
 torch = [
     {index = "pytorch-cpu", extra = "cpu"},
-    {index = "pytorch-gpu", extra = "gpu128"},
-    {index = "pytorch-gpu126", extra = "gpu126"}
+    {index = "pytorch-gpu126", extra = "gpu126"},
+    {index = "pytorch-gpu128", extra = "gpu128"},
+
 ]
 
 [[tool.uv.index]]
@@ -58,12 +59,14 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [[tool.uv.index]]
+name = "pytorch-gpu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
 name = "pytorch-gpu128"
 url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
-[[tool.uv.index]]
-name = "pytorch-gpu126"
-url = "https://download.pytorch.org/whl/cu126"
-explicit = true
+
 
