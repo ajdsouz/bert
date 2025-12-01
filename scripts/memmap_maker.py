@@ -47,7 +47,7 @@ def memmap_dataset(
 
     for split, data in dataset.items():
         tensor_length = tensor_length = sum(len(x) for x in data['token_ids'])
-        filename = f"data/{split}.tokens"
+        filename = f"{memmap_file_path}/{split}.tokens"
         memmap_file = np.memmap(filename=filename, dtype=np.uint16, mode='w+', shape=(tensor_length,))
         idx = 0
         for batch_idx in tqdm(range(BATCH_SIZE), desc=f"Writing {filename}"):
