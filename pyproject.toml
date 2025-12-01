@@ -24,12 +24,16 @@ cpu = [
 gpu = [
     "torch>=2.9.0"
 ]
+gpu126 = [
+    "torch>=2.9.0"
+]
 
 [tool.uv]
 conflicts = [
     [
         {extra = "cpu"},
         {extra = "gpu"},
+        {extra = "gpu126"},
     ]
 ]
 [build-system]
@@ -40,7 +44,8 @@ build-backend = "uv_build"
 bert = { path = "src" }
 torch = [
     {index = "pytorch-cpu", extra = "cpu"},
-    {index = "pytorch-gpu", extra = "gpu"}
+    {index = "pytorch-gpu", extra = "gpu"},
+    {index = "pytorch-gpu126", extra = "gpu126"}
 ]
 
 [[tool.uv.index]]
@@ -55,5 +60,10 @@ explicit = true
 [[tool.uv.index]]
 name = "pytorch-gpu"
 url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-gpu126"
+url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
