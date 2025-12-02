@@ -18,7 +18,7 @@ uv run scripts/train.py \
     --d_model=256 \
     --d_ffn=512 \
     --n_heads=4 \
-    --n_layer=2 \
+    --n_layer=6 \
     --dropout=0.0 \
     --vocab_size=50265 \
     --lr=5e-5 \
