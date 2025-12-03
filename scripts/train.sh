@@ -14,6 +14,7 @@ uv run scripts/train.py \
     --lr=5e-5 \
     --checkpoint_dir='ckpt' \
     --log_file='logs/logfile.log' \
+    --tracking=True \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining GPU Test" \
     --model_compile=True \

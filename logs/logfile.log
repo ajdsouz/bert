@@ -1,0 +1,18 @@
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 11.053749084472656
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 11.114563941955566
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 10.933259963989258
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 11.045369148254395
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 11.064374923706055
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 11.210926055908203
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 10.956730842590332
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 10.797938346862793
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 10.965543746948242
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 10.953882217407227
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 10.961057662963867
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 10.761881828308105

@@ -10,6 +10,7 @@ requires-python = ">=3.12,<3.14"
 dependencies = [
     "datasets==4.4.1",
     "ipykernel>=7.1.0",
+    "pip>=25.3",
     "requests>=2.32.5",
     "ruff>=0.14.4",
     "tqdm>=4.66.5",
@@ -18,7 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-bert = "scripts.train:main"
+bert = "bert.cli.train:main"
 
 [project.optional-dependencies]
 cpu = [
@@ -45,6 +46,7 @@ build-backend = "uv_build"
 
 [tool.uv.sources]
 bert = { path = "src" }
+scripts = { path = "." }
 torch = [
     {index = "pytorch-cpu", extra = "cpu"},
     {index = "pytorch-gpu126", extra = "gpu126"},
