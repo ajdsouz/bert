@@ -17,6 +17,9 @@ dependencies = [
     "wandb>=0.23.0",
 ]
 
+[project.scripts]
+bert = "scripts.train:main"
+
 [project.optional-dependencies]
 cpu = [
     "torch>=2.9.0"
