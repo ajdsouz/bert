@@ -1,8 +1,10 @@
 # !/bin/bash
 
 uv run python scripts/memmap_maker.py \
-    --output_memmap_path='data' \
-    --dataset="Salesforce/wikitext" \
-    --subset="wikitext-2-raw-v1" \
+    --output_memmap_path='test_data' \
+    --dataset="radm/tathagata" \
+    --subset=None \
     --dataset_columns="text" \
-    --tokenizer="FacebookAI/roberta-base" \
+    --val_ratio=0.1 \
+    --batch_size=8 \
+    --tokenizer="answerdotai/ModernBERT-base" \
