@@ -4,12 +4,15 @@ from torch import Tensor
 from torch.utils.data import Dataset, DataLoader
 
 class TokenDataset(Dataset):
-    def __init__(self, memmap_path: str, block_size: int) -> None:
+    def __init__(self, memmap_path: str, block_size: int, num_tokens: int | None) -> None:
         super().__init__()
-        self.data: np.memmap = np.memmap(filename=memmap_path, dtype=np.uint16, mode='r')
+        data = np.memmap(filename=memmap_path, dtype=np.uint16, mode='r')
+        if num_tokens is not None:
+            data = data[:num_tokens]
+        self.data: np.memmap = data
         self.block_size: int = block_size
         self.num_sequences: int = (len(self.data) -1) // block_size
-        self.start_indices: np.array = np.arange(self.num_sequences) * block_size
+        self.start_indices: np.ndarray = np.arange(self.num_sequences) * block_size
 
     def __len__(self):
         return self.num_sequences
