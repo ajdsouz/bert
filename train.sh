@@ -8,7 +8,7 @@ if [ -z "$GPU_ID" ]; then
   exit 1
 fi
 
-bert --model="FacebookAI/roberta-base" \
+bert --model="answerdotai/ModernBERT-base" \
 --memmap_path='data' \
 --batch_size=2 \
 --block_size=128 \

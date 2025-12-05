@@ -16,6 +16,7 @@ parser.add_argument(
 )
 parser.add_argument("--val_ratio", type=float, default=0.0001)
 parser.add_argument("--batch_size", type=int)
+parser.add_argument("--num_proc", type=int)
 parser.add_argument("--tokenizer", default="FacebookAI/roberta-base")
 args = parser.parse_args()
 
@@ -51,7 +52,8 @@ def memmap_dataset(
     dataset = dataset.map(
         process,
         batched=True,
-        remove_columns=[input_columns]
+        remove_columns=[input_columns],
+        num_proc=num_tokenizing_proc
     )
 
     for split, data in dataset.items():
@@ -83,11 +85,11 @@ def make_memmap_dataset(args: argparse.Namespace) -> None:
         split_dataset = dataset['train'].train_test_split(test_size=args.val_ratio, seed=1337)
         split_dataset['validation'] = split_dataset.pop('test')
         memmap_dataset(
-            args.output_memmap_path, tokenizer, split_dataset, args.dataset_columns
+            args.output_memmap_path, tokenizer, split_dataset, args.dataset_columns, args.num_proc
         )
     else:
         memmap_dataset(
-        args.output_memmap_path, tokenizer, dataset, args.dataset_columns
+        args.output_memmap_path, tokenizer, dataset, args.dataset_columns, args.num_proc
         )
 
 make_memmap_dataset(args=args)
