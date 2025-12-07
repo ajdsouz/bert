@@ -9,7 +9,7 @@ if [ -z "$GPU_ID" ]; then
 fi
 
 bert --model="answerdotai/ModernBERT-base" \
---memmap_path='data' \
+--memmap_path='test_data' \
 --batch_size=2 \
 --block_size=128 \
 --d_model=256 \

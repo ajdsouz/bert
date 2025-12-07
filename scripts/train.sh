@@ -1,8 +1,8 @@
 # !/bin/bash
 
 uv run scripts/train.py \
-    --model="FacebookAI/roberta-base" \
-    --memmap_path='data' \
+    --model="answerdotai/ModernBERT-base" \
+    --memmap_path='test_data' \
     --batch_size=2 \
     --block_size=128 \
     --d_model=256 \
@@ -10,13 +10,13 @@ uv run scripts/train.py \
     --n_heads=4 \
     --n_layer=2 \
     --dropout=0.0 \
-    --vocab_size=50265 \
+    --vocab_size=50368 \
     --lr=5e-5 \
     --checkpoint_dir='ckpt' \
     --log_file='logs/logfile.log' \
     --tracking=True \
     --wandb_entity="tororo" \
-    --wandb_project_name="BERT Pretraining GPU Test" \
+    --wandb_project_name="BERT Pretraining GPU Test with modified tokenization" \
     --model_compile=True \
     --device="cpu" \
     --grad_accumulation_steps=4 \

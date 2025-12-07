@@ -16,16 +16,46 @@ parser.add_argument(
 )
 parser.add_argument("--val_ratio", type=float, default=0.0001)
 parser.add_argument("--batch_size", type=int)
-parser.add_argument("--num_proc", type=int)
 parser.add_argument("--tokenizer", default="FacebookAI/roberta-base")
 args = parser.parse_args()
+
+def batch_iter(dataset, batch_size, columns):
+    batch = []
+    for ex in dataset:
+        text = " ".join(str(ex[c]) for c in columns)
+        batch.append(text)
+        if len(batch) == batch_size:
+            yield batch
+            batch = []
+    if batch:
+        yield batch
+
+
+def count_tokens(dataset, tokenizer, batch_size, columns):
+    total = 0
+    for batch in tqdm(batch_iter(dataset, batch_size, columns), desc="Counting tokens"):
+        enc = tokenizer(batch, add_special_tokens=False)
+        for ids in enc["input_ids"]:
+            total += len(ids)
+    return total
+
+
+def write_tokens(dataset, tokenizer, mmap, batch_size, columns):
+    idx = 0
+    for batch in tqdm(batch_iter(dataset, batch_size, columns), desc="Writing memmap"):
+        enc = tokenizer(batch, add_special_tokens=False)
+        for ids in enc["input_ids"]:
+            arr = np.array(ids, dtype=np.uint32)
+            mmap[idx: idx + len(arr)] = arr
+            idx += len(arr)
+    mmap.flush()
 
 def memmap_dataset(
     memmap_file_path: str | Path,
     tokenizer: AutoTokenizer,
     dataset: Dataset,
     input_columns: str | list[str],
-    num_tokenizing_proc: int = 0,
+    batch_size: int = 8
 ) -> None:
     """
     Tokenize the dataset and store it as memmap.
@@ -41,38 +71,20 @@ def memmap_dataset(
         - num_tokenizing_proc: Number of process to tokenize (HuggingFace built-in)
     """
 
-    def process(batch)-> dict:
-        tokens = tokenizer(batch[input_columns], padding=False, truncation=False)
-        input_ids = tokens['input_ids']
-        return {
-            'token_ids': input_ids,
-            'len': [len(t) for t in input_ids]
-        }
-    
-    dataset = dataset.map(
-        process,
-        batched=True,
-        remove_columns=[input_columns],
-        num_proc=num_tokenizing_proc
-    )
-
+    input_columns = args.dataset_columns
+    if isinstance(input_columns, str):
+        input_columns = [input_columns]
+        
     for split, data in dataset.items():
-        tensor_length = tensor_length = sum(len(x) for x in data['token_ids'])
+        
+        print(f"---Processing {split}---")
+        token_count = count_tokens(data, tokenizer, batch_size, input_columns)
+
         filename = f"{memmap_file_path}/{split}.tokens"
-        memmap_file = np.memmap(filename=filename, dtype=np.uint16, mode='w+', shape=(tensor_length,))
-        idx = 0
-        # num_batched = (len(data) + BATCH_SIZE -1) // BATCH_SIZE
-        for batch_idx in tqdm(range(args.batch_size), desc=f"Writing {filename}"):
-            # start = batch_idx * BATCH_SIZE
-            # end = min(start + BATCH_SIZE, len(data))
-            # batch = data[start:end].with_format('numpy')
-            batch = data.shard(args.batch_size, index=batch_idx, contiguous=True).with_format('numpy')
-            arr_batch = np.concatenate(batch['token_ids'])
-            memmap_file[idx:idx+len(arr_batch)] = arr_batch
-            idx += len(arr_batch)
-        memmap_file.flush()
+        memmap_file = np.memmap(filename=filename, dtype=np.uint32, mode='w+', shape=(token_count,))
 
-
+        write_tokens(data, tokenizer, memmap_file, batch_size, input_columns)
+        
 
 def make_memmap_dataset(args: argparse.Namespace) -> None:
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
@@ -85,11 +97,11 @@ def make_memmap_dataset(args: argparse.Namespace) -> None:
         split_dataset = dataset['train'].train_test_split(test_size=args.val_ratio, seed=1337)
         split_dataset['validation'] = split_dataset.pop('test')
         memmap_dataset(
-            args.output_memmap_path, tokenizer, split_dataset, args.dataset_columns, args.num_proc
+            args.output_memmap_path, tokenizer, split_dataset, args.dataset_columns, args.batch_size
         )
     else:
         memmap_dataset(
-        args.output_memmap_path, tokenizer, dataset, args.dataset_columns, args.num_proc
+        args.output_memmap_path, tokenizer, dataset, args.dataset_columns, args.batch_size
         )
 
 make_memmap_dataset(args=args)
