@@ -98,9 +98,9 @@ class Trainer:
         Returns:
             torch.Tensor: loss tensor
         """
-        input_ids = batch['input_ids'].to(self.device)
-        attention_mask = batch['attention_mask'].to(self.device)
-        labels =batch['labels'].to(self.device)
+        input_ids = batch['input_ids'].to(self.device, non_blocking=True)
+        attention_mask = batch['attention_mask'].to(self.device, non_blocking=True)
+        labels =batch['labels'].to(self.device, non_blocking=True)
         labels = torch.where((labels >= 0) & (labels < self.model.config.vocab_size), labels, -100)
         outputs = self.model(input_ids, attention_mask)
         loss = self.loss_fn(

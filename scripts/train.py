@@ -20,7 +20,7 @@ def main(args) -> None:
     valid_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=None)
 
     train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
-    valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
+    valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=0, collate_fn=collate_fn)
 
     class BERTTestConfig(BERTConfigTemplate):
         block_size: int = args.block_size
