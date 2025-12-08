@@ -10,6 +10,7 @@ requires-python = ">=3.12,<3.14"
 dependencies = [
     "datasets==3.6.0",
     "ipykernel>=7.1.0",
+    "lightning>=2.6.0",
     "pip>=25.3",
     "requests>=2.32.5",
     "ruff>=0.14.4",

@@ -16,11 +16,9 @@ uv run scripts/train.py \
     --save_every=100 \
     --eval_every=15 \
     --checkpoint_dir='ckpt' \
-    --log_file='logs/logfile.log' \
-    --tracking=True \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining GPU Test" \
-    --model_compile=True \
+    --run_name="Lightning test 3" \
     --device="cpu" \
     --grad_accumulation_steps=4 \
-    --precision='fp32'
+    --precision='32'
