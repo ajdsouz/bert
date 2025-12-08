@@ -6,9 +6,20 @@ import numpy as np
 from tqdm import tqdm
 from pathlib import Path
 
-
-TOKEN_DTYPE = np.uint16
-BATCH_SIZE = 1024
+parser = argparse.ArgumentParser()
+parser.add_argument("--output_memmap_path", type=str)
+parser.add_argument("--dataset", type=str)
+parser.add_argument("--subset", type=str, default=None)
+parser.add_argument("--split", type=float)
+# parser.add_argument("--dataset_split", "-s", type=str, default="train[:10]")
+parser.add_argument(
+    "--dataset_columns", "-c", type=str, default=["text"]
+)
+parser.add_argument("--val_ratio", type=float, default=0.0001)
+parser.add_argument("--batch_size", type=int)
+parser.add_argument("--num_proc", type=int)
+parser.add_argument("--tokenizer", default="FacebookAI/roberta-base")
+args = parser.parse_args()
 
 def memmap_dataset(
     memmap_file_path: str | Path,
@@ -32,7 +43,7 @@ def memmap_dataset(
     """
 
     def process(batch)-> dict:
-        tokens = tokenizer(batch['text'], padding=False, truncation=False)
+        tokens = tokenizer(batch[input_columns], padding=False, truncation=False)
         input_ids = tokens['input_ids']
         return {
             'token_ids': input_ids,
@@ -42,41 +53,42 @@ def memmap_dataset(
     dataset = dataset.map(
         process,
         batched=True,
-        remove_columns=['text']
+        remove_columns=[input_columns],
+        num_proc=num_tokenizing_proc
     )
 
     for split, data in dataset.items():
         tensor_length = tensor_length = sum(len(x) for x in data['token_ids'])
-        filename = f"data/{split}.tokens"
+        filename = f"{memmap_file_path}/{split}.tokens"
         memmap_file = np.memmap(filename=filename, dtype=np.uint16, mode='w+', shape=(tensor_length,))
         idx = 0
-        for batch_idx in tqdm(range(BATCH_SIZE), desc=f"Writing {filename}"):
-            batch = data.shard(BATCH_SIZE, index=batch_idx, contiguous=True).with_format('numpy')
+        # num_batched = (len(data) + BATCH_SIZE -1) // BATCH_SIZE
+        for batch_idx in tqdm(range(args.batch_size), desc=f"Writing {filename}"):
+            # start = batch_idx * BATCH_SIZE
+            # end = min(start + BATCH_SIZE, len(data))
+            # batch = data[start:end].with_format('numpy')
+            batch = data.shard(args.batch_size, index=batch_idx, contiguous=True).with_format('numpy')
             arr_batch = np.concatenate(batch['token_ids'])
             memmap_file[idx:idx+len(arr_batch)] = arr_batch
             idx += len(arr_batch)
         memmap_file.flush()
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--output_memmap_path", type=str)
-parser.add_argument("--dataset", type=str)
-parser.add_argument("--subset", type=str)
-# parser.add_argument("--dataset_split", "-s", type=str, default="train[:10]")
-parser.add_argument(
-    "--dataset_columns", "-c", type=str, default=["text"]
-)
-parser.add_argument("--tokenizer", default="FacebookAI/roberta-base")
-args = parser.parse_args()
 
 def make_memmap_dataset(args: argparse.Namespace) -> None:
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
     # dataset = load_dataset(*args.dataset_args, split=args.dataset_split)
-
+    subset = None if args.subset=="None" else args.subset
     print(f"using {args.tokenizer} on {args.dataset} subset {args.subset} column {args.dataset_columns}")
-    dataset = load_dataset(args.dataset, args.subset)
+    dataset = load_dataset(args.dataset, subset)
+
+    data = dataset['train'].select(range(int(args.split * len(dataset["train"]))))
+
+    split_dataset = data.train_test_split(test_size=args.val_ratio, seed=1337)
+    split_dataset['validation'] = split_dataset.pop('test')
     memmap_dataset(
-        args.output_memmap_path, tokenizer, dataset, args.dataset_columns
+        args.output_memmap_path, tokenizer, split_dataset, args.dataset_columns, args.num_proc
     )
+    
 
 make_memmap_dataset(args=args)

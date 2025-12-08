@@ -3,6 +3,11 @@
 BERT implementation for Pretraining LLMs software project at UdS.
 
 > [!Note]
+> [Update : 03/12/2025] This repository has achieved v1.0.0. 
+
+---
+
+> [!Note]
 > This repository is WIP. Stability will be achieved on v1.0.0.
 
 ## Usage
@@ -10,7 +15,26 @@ BERT implementation for Pretraining LLMs software project at UdS.
 ### Pretraining run
 
 ```bash
-add pretraining code here
+bert --model="FacebookAI/roberta-base" \
+--memmap_path=<memmap_path> \
+--batch_size=2 \
+--block_size=128 \
+--d_model=256 \
+--d_ffn=512 \
+--n_heads=4 \
+--n_layer=2 \
+--dropout=0.0 \
+--vocab_size=50265 \
+--lr=5e-5 \
+--checkpoint_dir='ckpt' \
+--log_file='logs/logfile.log' \
+--tracking=True \
+--wandb_entity=<username> \
+--wandb_project_name=<project_name> \
+--model_compile=True \
+--device=<accelerator> \
+--grad_accumulation_steps=4 \
+--precision='fp32'
 ```
 
 ### Finetuning run
@@ -42,9 +66,10 @@ add w&b link
 ## Checklist
 
 - [X] Model
-- [ ] Dataloader
-- [ ] Data processing
-- [ ] Pretraining
+- [X] Dataloader
+- [X] Data processing
+- [X] Pretraining
+- [X] Mixed precision support
 - [ ] Evaluation
 
 ```bibtex

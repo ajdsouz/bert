@@ -1,4 +1,4 @@
-from src.bert.model import BertEncoder, BERTTestConfig
+from bert.model import BertEncoder, BERTTestConfig
 
 import torch
 import torch.nn as nn

@@ -1,5 +1,5 @@
 # ------ Testing positional encoding
-from src.bert.layers import SinusoidalPositionalEncoding
+from bert.layers import SinusoidalPositionalEncoding
 
 import torch
 import torch.nn as nn

@@ -1,0 +1,161 @@
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 11.053749084472656
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 11.114563941955566
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 10.933259963989258
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 11.045369148254395
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 11.064374923706055
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 11.210926055908203
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 10.956730842590332
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 10.797938346862793
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 10.965543746948242
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 10.953882217407227
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 10.961057662963867
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 10.761881828308105
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 11.2716064453125
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 11.096535682678223
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 11.035613059997559
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 11.074780464172363
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 10.792328834533691
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 11.001385688781738
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26840665 parameters
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26893504 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 10.882261276245117
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 11.019414901733398
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 10.914206504821777
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 10.95837116241455
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 10.955501556396484
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 11.011290550231934
+INFO     Train epoch: 0 step: 7 Tokens seen: 1792 Train Loss: 10.999858856201172
+INFO     Train epoch: 0 step: 8 Tokens seen: 2048 Train Loss: 10.886495590209961
+INFO     Train epoch: 0 step: 9 Tokens seen: 2304 Train Loss: 10.870769500732422
+INFO     Train epoch: 0 step: 10 Tokens seen: 2560 Train Loss: 10.90875244140625
+INFO     Train epoch: 0 step: 11 Tokens seen: 2816 Train Loss: 11.044804573059082
+INFO     Train epoch: 0 step: 12 Tokens seen: 3072 Train Loss: 10.877908706665039
+INFO     Train epoch: 0 step: 13 Tokens seen: 3328 Train Loss: 10.827352523803711
+INFO     Train epoch: 0 step: 14 Tokens seen: 3584 Train Loss: 10.89820671081543
+INFO     Train epoch: 0 step: 15 Tokens seen: 3840 Train Loss: 10.945429801940918
+INFO     Train epoch: 0 step: 16 Tokens seen: 4096 Train Loss: 10.915336608886719
+INFO     Train epoch: 0 step: 17 Tokens seen: 4352 Train Loss: 10.947785377502441
+INFO     Train epoch: 0 step: 18 Tokens seen: 4608 Train Loss: 10.70189094543457
+INFO     Train epoch: 0 step: 19 Tokens seen: 4864 Train Loss: 10.822782516479492
+INFO     Train epoch: 0 step: 20 Tokens seen: 5120 Train Loss: 10.795807838439941
+INFO     Train epoch: 0 step: 21 Tokens seen: 5376 Train Loss: 10.928770065307617
+INFO     Train epoch: 0 step: 22 Tokens seen: 5632 Train Loss: 10.865924835205078
+INFO     Train epoch: 0 step: 23 Tokens seen: 5888 Train Loss: 10.841900825500488
+INFO     Train epoch: 0 step: 24 Tokens seen: 6144 Train Loss: 10.85055160522461
+INFO     Train epoch: 0 step: 25 Tokens seen: 6400 Train Loss: 10.661043167114258
+INFO     Train epoch: 0 step: 26 Tokens seen: 6656 Train Loss: 10.841645240783691
+INFO     Train epoch: 0 step: 27 Tokens seen: 6912 Train Loss: 10.88331413269043
+INFO     Train epoch: 0 step: 28 Tokens seen: 7168 Train Loss: 10.689126014709473
+INFO     Train epoch: 0 step: 29 Tokens seen: 7424 Train Loss: 10.880420684814453
+INFO     Train epoch: 0 step: 30 Tokens seen: 7680 Train Loss: 10.830941200256348
+INFO     Train epoch: 0 step: 31 Tokens seen: 7936 Train Loss: 10.985325813293457
+INFO     Train epoch: 0 step: 32 Tokens seen: 8192 Train Loss: 10.679101943969727
+INFO     Train epoch: 0 step: 33 Tokens seen: 8448 Train Loss: 10.857023239135742
+INFO     Train epoch: 0 step: 34 Tokens seen: 8704 Train Loss: 10.767664909362793
+INFO     Train epoch: 0 step: 35 Tokens seen: 8960 Train Loss: 10.655866622924805
+INFO     Train epoch: 0 step: 36 Tokens seen: 9216 Train Loss: 10.64114761352539
+INFO     Train epoch: 0 step: 37 Tokens seen: 9472 Train Loss: 10.802435874938965
+INFO     Train epoch: 0 step: 38 Tokens seen: 9728 Train Loss: 10.862839698791504
+INFO     Train epoch: 0 step: 39 Tokens seen: 9984 Train Loss: 10.872357368469238
+INFO     Train epoch: 0 step: 40 Tokens seen: 10240 Train Loss: 10.812782287597656
+INFO     Train epoch: 0 step: 41 Tokens seen: 10496 Train Loss: 10.698319435119629
+INFO     Train epoch: 0 step: 42 Tokens seen: 10752 Train Loss: 10.673543930053711
+INFO     Train epoch: 0 step: 43 Tokens seen: 11008 Train Loss: 10.73681640625
+INFO     Using precision = torch.float32
+INFO     Model is compiled!
+INFO     Model has 26893504 parameters
+INFO     Train epoch: 0 step: 1 Tokens seen: 256 Train Loss: 11.06775188446045
+INFO     Train epoch: 0 step: 2 Tokens seen: 512 Train Loss: 11.105461120605469
+INFO     Train epoch: 0 step: 3 Tokens seen: 768 Train Loss: 11.002249717712402
+INFO     Train epoch: 0 step: 4 Tokens seen: 1024 Train Loss: 11.106563568115234
+INFO     Train epoch: 0 step: 5 Tokens seen: 1280 Train Loss: 11.061182022094727
+INFO     Train epoch: 0 step: 6 Tokens seen: 1536 Train Loss: 10.861788749694824
+INFO     Train epoch: 0 step: 7 Tokens seen: 1792 Train Loss: 10.924007415771484
+INFO     Train epoch: 0 step: 8 Tokens seen: 2048 Train Loss: 10.931485176086426
+INFO     Train epoch: 0 step: 9 Tokens seen: 2304 Train Loss: 10.826790809631348
+INFO     Train epoch: 0 step: 10 Tokens seen: 2560 Train Loss: 10.810758590698242
+INFO     Train epoch: 0 step: 11 Tokens seen: 2816 Train Loss: 10.866915702819824
+INFO     Train epoch: 0 step: 12 Tokens seen: 3072 Train Loss: 10.86864185333252
+INFO     Train epoch: 0 step: 13 Tokens seen: 3328 Train Loss: 10.92945671081543
+INFO     Train epoch: 0 step: 14 Tokens seen: 3584 Train Loss: 11.127406120300293
+INFO     Train epoch: 0 step: 15 Tokens seen: 3840 Train Loss: 10.892086029052734
+INFO     Eval Step: 15 Tokens seen: 3840 Val Loss : 10.934142174079405
+INFO     Train epoch: 0 step: 16 Tokens seen: 4096 Train Loss: 11.026154518127441
+INFO     Train epoch: 0 step: 17 Tokens seen: 4352 Train Loss: 11.03818416595459
+INFO     Train epoch: 0 step: 18 Tokens seen: 4608 Train Loss: 10.847251892089844
+INFO     Train epoch: 0 step: 19 Tokens seen: 4864 Train Loss: 10.931543350219727
+INFO     Train epoch: 0 step: 20 Tokens seen: 5120 Train Loss: 11.012222290039062
+INFO     Train epoch: 0 step: 21 Tokens seen: 5376 Train Loss: 10.842341423034668
+INFO     Train epoch: 0 step: 22 Tokens seen: 5632 Train Loss: 10.76786994934082
+INFO     Train epoch: 0 step: 23 Tokens seen: 5888 Train Loss: 10.987651824951172
+INFO     Train epoch: 0 step: 24 Tokens seen: 6144 Train Loss: 10.910263061523438
+INFO     Train epoch: 0 step: 25 Tokens seen: 6400 Train Loss: 10.698715209960938
+INFO     Train epoch: 0 step: 26 Tokens seen: 6656 Train Loss: 10.920098304748535
+INFO     Train epoch: 0 step: 27 Tokens seen: 6912 Train Loss: 10.808648109436035
+INFO     Train epoch: 0 step: 28 Tokens seen: 7168 Train Loss: 10.827336311340332
+INFO     Train epoch: 0 step: 29 Tokens seen: 7424 Train Loss: 10.701326370239258
+INFO     Train epoch: 0 step: 30 Tokens seen: 7680 Train Loss: 10.829684257507324
+INFO     Eval Step: 30 Tokens seen: 7680 Val Loss : 10.833493043107596
+INFO     Train epoch: 0 step: 31 Tokens seen: 7936 Train Loss: 10.9210786819458
+INFO     Train epoch: 0 step: 32 Tokens seen: 8192 Train Loss: 10.97668170928955
+INFO     Train epoch: 0 step: 33 Tokens seen: 8448 Train Loss: 10.816579818725586
+INFO     Train epoch: 0 step: 34 Tokens seen: 8704 Train Loss: 10.659727096557617
+INFO     Train epoch: 0 step: 35 Tokens seen: 8960 Train Loss: 10.81165885925293
+INFO     Train epoch: 0 step: 36 Tokens seen: 9216 Train Loss: 10.788959503173828
+INFO     Train epoch: 0 step: 37 Tokens seen: 9472 Train Loss: 10.750788688659668
+INFO     Train epoch: 0 step: 38 Tokens seen: 9728 Train Loss: 10.909399032592773
+INFO     Train epoch: 0 step: 39 Tokens seen: 9984 Train Loss: 10.925371170043945
+INFO     Train epoch: 0 step: 40 Tokens seen: 10240 Train Loss: 10.731691360473633
+INFO     Train epoch: 0 step: 41 Tokens seen: 10496 Train Loss: 10.849570274353027
+INFO     Train epoch: 0 step: 42 Tokens seen: 10752 Train Loss: 10.758180618286133
+INFO     Train epoch: 0 step: 43 Tokens seen: 11008 Train Loss: 10.811711311340332
+INFO     Train epoch: 0 step: 44 Tokens seen: 11264 Train Loss: 10.650877952575684
+INFO     Train epoch: 0 step: 45 Tokens seen: 11520 Train Loss: 10.492252349853516
+INFO     Eval Step: 45 Tokens seen: 11520 Val Loss : 10.73663812492326
+INFO     Train epoch: 0 step: 46 Tokens seen: 11776 Train Loss: 10.737135887145996
+INFO     Train epoch: 0 step: 47 Tokens seen: 12032 Train Loss: 10.83035945892334
+INFO     Train epoch: 0 step: 48 Tokens seen: 12288 Train Loss: 10.705403327941895
+INFO     Train epoch: 0 step: 49 Tokens seen: 12544 Train Loss: 10.617585182189941
+INFO     Train epoch: 0 step: 50 Tokens seen: 12800 Train Loss: 10.77810001373291
+INFO     Train epoch: 0 step: 51 Tokens seen: 13056 Train Loss: 10.707673072814941
+INFO     Train epoch: 0 step: 52 Tokens seen: 13312 Train Loss: 10.63121509552002
+INFO     Train epoch: 0 step: 53 Tokens seen: 13568 Train Loss: 10.509095191955566
+INFO     Train epoch: 0 step: 54 Tokens seen: 13824 Train Loss: 10.769111633300781
+INFO     Train epoch: 0 step: 55 Tokens seen: 14080 Train Loss: 10.834705352783203
+INFO     Train epoch: 0 step: 56 Tokens seen: 14336 Train Loss: 10.622377395629883
+INFO     Train epoch: 0 step: 57 Tokens seen: 14592 Train Loss: 10.787663459777832
+INFO     Train epoch: 0 step: 58 Tokens seen: 14848 Train Loss: 10.594045639038086
+INFO     Train epoch: 0 step: 59 Tokens seen: 15104 Train Loss: 10.582681655883789
+INFO     Train epoch: 0 step: 60 Tokens seen: 15360 Train Loss: 10.683584213256836
+INFO     Eval Step: 60 Tokens seen: 15360 Val Loss : 10.653704609787255
+INFO     Train epoch: 0 step: 61 Tokens seen: 15616 Train Loss: 10.627276420593262
+INFO     Train epoch: 0 step: 62 Tokens seen: 15872 Train Loss: 10.66104793548584
+INFO     Train epoch: 0 step: 63 Tokens seen: 16128 Train Loss: 10.534117698669434
+INFO     Train epoch: 0 step: 64 Tokens seen: 16384 Train Loss: 10.619260787963867
+INFO     Train epoch: 0 step: 65 Tokens seen: 16640 Train Loss: 10.904996871948242
+INFO     Train epoch: 0 step: 66 Tokens seen: 16896 Train Loss: 10.588330268859863
+INFO     Train epoch: 0 step: 67 Tokens seen: 17152 Train Loss: 10.562033653259277
+INFO     Train epoch: 0 step: 68 Tokens seen: 17408 Train Loss: 10.703327178955078
+INFO     Train epoch: 0 step: 69 Tokens seen: 17664 Train Loss: 10.466192245483398
+INFO     Train epoch: 0 step: 70 Tokens seen: 17920 Train Loss: 10.789336204528809
+INFO     Train epoch: 0 step: 71 Tokens seen: 18176 Train Loss: 10.680464744567871
+INFO     Train epoch: 0 step: 72 Tokens seen: 18432 Train Loss: 10.657522201538086
+INFO     Train epoch: 0 step: 73 Tokens seen: 18688 Train Loss: 10.580925941467285
+INFO     Train epoch: 0 step: 74 Tokens seen: 18944 Train Loss: 10.641167640686035
+INFO     Train epoch: 0 step: 75 Tokens seen: 19200 Train Loss: 10.509793281555176

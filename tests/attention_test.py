@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F 
 
 #----- parity check between my attention and pytorch's sdpa 
-from src.bert.functional import attention
+from bert.functional import attention
 from torch.nn.functional import scaled_dot_product_attention
 #-----------------------------------------------------------
 

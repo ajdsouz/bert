@@ -39,7 +39,7 @@ class MultiHeadAttention(nn.Module):
         self.Wk : nn.Linear = nn.Linear(self.d_model, self.d_model)
         self.Wv : nn.Linear= nn.Linear(self.d_model, self.d_model)
     
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: Tensor, mask: Tensor) -> Tensor:
         """Multi-head attention
 
         Args:
@@ -52,7 +52,10 @@ class MultiHeadAttention(nn.Module):
         k = split_heads(self.Wk(x), self.n_heads)
         v = split_heads(self.Wv(x), self.n_heads)
 
-        att, weights = attention(q, k, v)
+        if mask is not None:
+            mask = mask[:, None, None, :] # autobroadcast to [B, H, S, S]
+            
+        att, weights = attention(q, k, v, mask=mask)
 
         attention_out = merge_heads(att)
 
@@ -115,7 +118,7 @@ class EncoderLayer(nn.Module):
         self.mha: MultiHeadAttention = MultiHeadAttention(self.d_model, self.n_heads)
         self.ffn: FFN = FFN(self.d_model, self.d_ffn)
     
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: Tensor, mask: Tensor) -> Tensor:
         """Encoder layer / block for encoder models
 
         Args:
@@ -125,7 +128,7 @@ class EncoderLayer(nn.Module):
             Tensor: Tensor Output
         """
         x = self.ln1(
-            x + self.mha(x)
+            x + self.mha(x, mask)
         )
         return self.ln2(
             x + self.ffn(x)

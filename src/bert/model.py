@@ -19,7 +19,7 @@ class BERTTestConfig(BERTConfigTemplate):
     d_model: int = 64
     d_ffn: int = 256
     n_heads: int = 2
-    n_layer: int = 22
+    n_layer: int = 2
     dropout: float = 0.0
     vocab_size: int = 500
 
@@ -35,6 +35,7 @@ class BERTBaseConfig(BERTConfigTemplate):
 class BertEncoder(nn.Module):
     def __init__(self, config: BERTConfigTemplate):
         super().__init__()
+        self.config = config
         self.transformer = nn.ModuleDict(dict(
                 spe = SinusoidalPositionalEncoding(d_model=config.d_model, block_size=config.block_size),
                 wte = EmbeddingLayer(vocab_size=config.vocab_size, d_model=config.d_model),
@@ -45,7 +46,7 @@ class BertEncoder(nn.Module):
             ))
         self.head = nn.Linear(in_features=config.d_model, out_features=config.vocab_size)        
 
-    def forward(self, input_ids: Tensor):
+    def forward(self, input_ids: Tensor, attention_mask: Tensor):
         """Bert model implementation
 
         Args:
@@ -57,7 +58,7 @@ class BertEncoder(nn.Module):
         tok_emb = self.transformer.wte(input_ids)
         x = self.transformer.spe(tok_emb)
         for block in self.transformer.h:
-            x = block(x)
+            x = block(x, attention_mask)
         x = self.transformer.ln_f(x)
         logits = self.head(x)
         return logits
