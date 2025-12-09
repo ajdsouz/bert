@@ -18,6 +18,7 @@ ckpt/
 
 # Temporary folders
 tmp/
+logs/
 
 # server scripts
 server/
