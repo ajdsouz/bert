@@ -1,77 +1,79 @@
 import math
-from torch import Tensor 
-import torch.nn.functional as F 
+
+import torch
+from torchtyping import TensorType as T
+from typeguard import typechecked
 
 
+@typechecked
 def attention(
-        query: Tensor, 
-        key: Tensor, 
-        value: Tensor, 
-        scale: float | None = None, 
-        mask : Tensor | None = None
-) -> tuple[Tensor, Tensor]:
+    query: T["batch", "weight"],
+    key: T["batch", "weight"],
+    value: T["batch", "weight"],
+    scale: float | None = None,
+    mask: T["batch", int] | None = None,
+) -> tuple[T["batch", "weight"], T["batch", "batch"]]:
     """Computes attention score as in https://arxiv.org/abs/1706.03762
 
     Args:
-        query (Tensor): query weight tensor
-        key (Tensor): key weight tensot
-        value (Tensor): value weight tensor
-        scale (float, optional): scaling factor for attention calculation. 
+        query: `T["batch", "weight"]` Query weight tensor.
+        key: `T["batch", "weight"]` Key weight tensor.
+        value: `T["batch", "weight"]` Value weight tensor.
+        scale: Scaling factor for attention calculation.
             If no scale is provided, will use last dim of key. Defaults to None.
-        mask (Tensor, optional): mask for masking tokens. Defaults to None.
+        mask: `T["batch", int]` Mask for masking tokens. Defaults to None.
 
     Returns:
-        tuple [Tensor, Tensor]: attention score, attention weights
+        A tuple (attention_score, attention_weights), where
+        - attention_score: `T["batch", "weight"]`.
+        - attention_weights: `T["batch", "batch"]`.
     """
     if scale is None:
-        scale = math.sqrt(key.size(-1))
+        scale: float = math.sqrt(key.size(-1))
 
-    scores = (query @ key.transpose(-2, -1)) / scale
+    scores: T["batch", "batch"] = (query @ key.transpose(-2, -1)) / scale
 
     if mask is not None:
-        scores.masked_fill(mask==0, value=float('-inf'))
-    
-    attention_weights = F.softmax(scores, -1)
-    attention = attention_weights @ value 
+        scores = scores.masked_fill(mask == 0, value=float("-inf"))
+
+    attention_weights: T["batch", "batch"] = torch.softmax(scores, -1)
+    attention: T["batch", "weight"] = attention_weights @ value
 
     return attention, attention_weights
 
 
-def split_heads(x: Tensor, n_heads: int) -> Tensor:
+@typechecked
+def split_heads(
+    x: T["batch", "sequence", "d_model"],
+    n_heads: int,
+) -> T["batch", "n_heads", "sequence", "d_head"]:
     """Split tensor into n_heads tensors for individual attention heads
 
     Args:
-        x (Tensor): tensor to be split
-        n_heads (int): number of heads
+        x: `T["batch", "sequence", "d_model"]` tensor to be split.
+        n_heads: Number of heads.
 
     Returns:
-        Tensor: A different view of the tensor of form [Batch n_heads Sequence d_head]
+        `T["batch", "n_heads", "sequence", "d_head"]` A different view of the tensor.
     """
-    # [batch sequence d_model]
     B, S, D = x.shape
     d_head = D // n_heads
-    # [batch sequence n_heads d_head] => [batch n_heads sequence d_head]
-    return x.view(B, S, n_heads, d_head).transpose(1, 2)
+    x: T[B, n_heads, S, D] = x.view(B, S, n_heads, d_head).transpose(1, 2)
+    return x
 
-def merge_heads(x: Tensor) -> Tensor:
+
+@typechecked
+def merge_heads(
+    x: T["batch", "n_heads", "sequence", "d_head"],
+) -> T["batch", "sequence", "d_model"]:
     """Merge tensor after after attention calculation
 
     Args:
-        x (Tensor): Tensor [Batch n_heads Sequence d_head] to be merged
+        x: `T["batch", "n_heads", "sequence", "d_head"]` Tensor to be merged.
 
     Returns:
-        Tensor: Merged tensor of shape [Batch Sequence d_model]
+        `T["batch", "sequence", "d_model"]` Merged tensor.
     """
     B, Nh, S, Dh = x.shape
-    return x.transpose(1, 2).contiguous().view(B, S, Nh * Dh)
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+    x: T[B, S, Nh, Dh] = x.transpose(1, 2).contiguous()
+    return x.view(B, S, Nh * Dh)
