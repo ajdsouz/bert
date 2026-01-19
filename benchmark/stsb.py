@@ -1,5 +1,6 @@
 import argparse
 import torch
+import torchmetrics
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
@@ -28,6 +29,8 @@ class STSBTrainer(L.LightningModule):
         self.model = model
         self.loss_fn = nn.MSELoss()
         self.lr = lr
+        self.pearson = torchmetrics.PearsonCorrCoef()
+        self.spearman = torchmetrics.SpearmanCorrCoef()
 
     def forward(self, input_ids, attention_mask):
         x = self.model.transformer.wte(input_ids)
@@ -53,17 +56,17 @@ class STSBTrainer(L.LightningModule):
         labels = batch['labels']
         preds = self(input_ids, attention_mask)
         loss = self.loss_fn(preds, labels)
+        self.pearson.update(preds, labels)
+        self.spearman.update(preds, labels)
         self.log("val_loss", loss, prog_bar=True)
-        return {"preds": preds, "labels": labels}
+        return loss
 
-    def validation_epoch_end(self, outputs):
-        preds = torch.cat([o['preds'] for o in outputs]).detach().cpu()
-        labels = torch.cat([o['labels'] for o in outputs]).detach().cpu()
-        from scipy.stats import pearsonr, spearmanr
-        pearson = pearsonr(preds, labels)[0]
-        spearman = spearmanr(preds, labels)[0]
-        self.log("val_pearson", pearson)
-        self.log("val_spearman", spearman)
+    def on_validation_epoch_end(self):
+        self.log("val_pearson", self.pearson.compute())
+        self.log("val_spearman", self.spearman.compute())
+        # Reset metrics for next epoch
+        self.pearson.reset()
+        self.spearman.reset()
 
     def configure_optimizers(self):
         return torch.optim.AdamW(self.parameters(), lr=self.lr)
@@ -72,7 +75,7 @@ class STSBTrainer(L.LightningModule):
 # Dataset prep
 # -------------------------------
 def prepare_dataset(tokenizer, max_length=128):
-    dataset = load_dataset("sentence_transformers/stsb")
+    dataset = load_dataset("sentence-transformers/stsb")
     
     def tokenize(batch):
         return tokenizer(batch['sentence1'], batch['sentence2'],
@@ -90,13 +93,17 @@ def prepare_dataset(tokenizer, max_length=128):
 # Main
 # -------------------------------
 def main(args):
+    print("Tokenizer prepared")
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
     
+
     # Load STS-B dataset
+    print("loading dataset")
     dataset = prepare_dataset(tokenizer, max_length=args.block_size)
     train_dl = DataLoader(dataset['train'], batch_size=args.batch_size, shuffle=True)
     val_dl = DataLoader(dataset['validation'], batch_size=args.batch_size)
-
+    print("loaded dataset")
+    
     # Load pretrained model
     class STSBConfig(BERTConfigTemplate):
         block_size = args.block_size
@@ -107,12 +114,20 @@ def main(args):
         dropout = args.dropout
         vocab_size = args.vocab_size
 
+    print("loading model state dict from checkpoint")
     model = BertEncoder(STSBConfig)
-    state = torch.load(args.checkpoint_path)
-    model.load_state_dict(state, strict=False)
+    ckpt = torch.load(f"{args.checkpoint_dir}/{args.checkpoint_path}", map_location='cuda' if torch.cuda.is_available() else 'cpu')
+    model.load_state_dict(ckpt['state_dict'], strict=False)
+    print("loaded model checkpoint")
 
     # Replace LM head with regression head
+    print("replacing lm_head with regressor head")
     model.head = STSBHead(args.d_model)
+
+    print("freezing model weights except regressor head")
+    for name, param in model.named_parameters():
+        if "head" not in name:
+            param.requires_grad = False
 
     # Lightning module
     plmodel = STSBTrainer(model, lr=args.lr)

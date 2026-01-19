@@ -15,6 +15,7 @@ dependencies = [
     "requests>=2.32.5",
     "ruff>=0.14.4",
     "scipy>=1.17.0",
+    "torchmetrics>=1.8.2",
     "tqdm>=4.66.5",
     "transformers>=4.57.3",
     "wandb>=0.23.0",
