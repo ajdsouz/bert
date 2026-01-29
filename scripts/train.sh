@@ -18,7 +18,8 @@ uv run scripts/train.py \
     --checkpoint_dir='ckpt' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining GPU Test" \
-    --run_name="Lightning test 3" \
+    --run_name="Lightning test 4" \
     --device="cpu" \
     --grad_accumulation_steps=4 \
-    --precision='32'
+    --precision='32' \
+    --num_tokens=40_000
