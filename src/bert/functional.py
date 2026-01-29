@@ -29,7 +29,7 @@ def attention(
     scores = (query @ key.transpose(-2, -1)) / scale
 
     if mask is not None:
-        scores.masked_fill(mask==0, value=float('-inf'))
+        scores = scores.masked_fill(mask==0, value=float('-inf'))
     
     attention_weights = F.softmax(scores, -1)
     attention = attention_weights @ value 
