@@ -38,6 +38,11 @@ def main(args) -> None:
 
     model = BertEncoder(BERTTestConfig)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    lr_scheduler = torch.optim.lr_scheduler.LinearLR(
+        optimizer=optimizer,
+        start_factor=0.01,
+        total_iters=int(0.1 * len(train_dl))
+    )
     loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 
     checkpoint_every_n_steps = ModelCheckpoint(
@@ -67,6 +72,7 @@ def main(args) -> None:
         model = model,
         loss_fn=loss_fn,
         optimizer=optimizer,
+        scheduler=lr_scheduler,
     )
 
     trainer = L.Trainer(

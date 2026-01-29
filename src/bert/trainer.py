@@ -59,7 +59,8 @@ class ModelTrainer(L.LightningModule):
         tokens = attention_mask.sum()
         self.tokens_seen += tokens
         self.log("tokens_this_step", self.tokens_seen, on_step=True, on_epoch=False)
-
+        cur_lr = self.trainer.optimizers[0].param_groups[0]['lr']
+        self.log("lr", cur_lr, prog_bar=True, on_step=True)
         self.log('train_loss', loss, on_step=True, on_epoch=True, logger=True, prog_bar=True)
         return loss
     
@@ -93,6 +94,7 @@ class ModelTrainer(L.LightningModule):
                 "optimizer": self._optimizer,
                 "lr_scheduler": {
                     "scheduler": self._scheduler,
+                    "interval": "step",
                     "monitor": "val_loss",
                 }
             }
