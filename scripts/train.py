@@ -1,6 +1,7 @@
 from bert.model import BertEncoder, BERTConfigTemplate
 from bert.dataset import TokenDataset
 from bert.trainer import ModelTrainer
+from bert.lr_scheduler import build_lr_scheduler_linear_warmup_then_cosine
 
 import argparse
 import torch
@@ -38,10 +39,12 @@ def main(args) -> None:
 
     model = BertEncoder(BERTTestConfig)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    lr_scheduler = torch.optim.lr_scheduler.LinearLR(
-        optimizer=optimizer,
-        start_factor=0.01,
-        total_iters=int(0.1 * len(train_dl))
+    lr_scheduler = build_lr_scheduler_linear_warmup_then_cosine(
+        optimizer,
+        linear_start_factor=0.01,
+        linear_end_factor=1.0,
+        linear_steps=int(0.1 * len(train_dl)),
+        cosine_min_lr=1e-5,
     )
     loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 
