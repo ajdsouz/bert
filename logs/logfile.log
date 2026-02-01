@@ -3933,3 +3933,11 @@ INFO     Train epoch: 0 step: 1 Tokens seen: 128 Train Loss: 11.075233459472656
 INFO     Train epoch: 0 step: 2 Tokens seen: 256 Train Loss: 11.159783363342285
 INFO     Train epoch: 0 step: 3 Tokens seen: 384 Train Loss: 10.924713134765625
 INFO     Train epoch: 0 step: 4 Tokens seen: 512 Train Loss: 11.282733917236328
+INFO     Model is compiled!
+INFO     Train epoch: 0 step: 1 Tokens seen: 128 Train Loss: 10.967208862304688
+INFO     Model is compiled!
+INFO     Train epoch: 0 step: 1 Tokens seen: 128 Train Loss: 10.789674758911133
+INFO     Train epoch: 0 step: 2 Tokens seen: 256 Train Loss: 11.134535789489746
+INFO     Train epoch: 0 step: 3 Tokens seen: 384 Train Loss: 10.674156188964844
+INFO     Train epoch: 0 step: 4 Tokens seen: 512 Train Loss: 10.798478126525879
+INFO     Train epoch: 0 step: 5 Tokens seen: 640 Train Loss: 10.931946754455566

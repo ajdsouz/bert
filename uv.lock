@@ -19,28 +19,6 @@ conflicts = [[
 ]]
 
 [[package]]
-name = "accelerate"
-version = "1.12.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "huggingface-hub" },
-    { name = "numpy" },
-    { name = "packaging" },
-    { name = "psutil" },
-    { name = "pyyaml" },
-    { name = "safetensors" },
-    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/8e/ac2a9566747a93f8be36ee08532eb0160558b07630a081a6056a9f89bf1d/accelerate-1.12.0.tar.gz", hash = "sha256:70988c352feb481887077d2ab845125024b2a137a5090d6d7a32b57d03a45df6", size = 398399, upload-time = "2025-11-21T11:27:46.973Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/9f/d2/c581486aa6c4fbd7394c23c47b83fa1a919d34194e16944241daf9e762dd/accelerate-1.12.0-py3-none-any.whl", hash = "sha256:3e2091cd341423207e2f084a6654b1efcd250dc326f2a37d6dde446e07cabb11", size = 380935, upload-time = "2025-11-21T11:27:44.522Z" },
-]
-
-[[package]]
 name = "aiohappyeyeballs"
 version = "2.6.1"
 source = { registry = "https://pypi.org/simple" }
@@ -167,9 +145,9 @@ name = "bert"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "accelerate" },
     { name = "datasets" },
     { name = "ipykernel" },
+    { name = "lightning" },
     { name = "requests" },
     { name = "ruff" },
     { name = "tqdm" },
@@ -191,9 +169,9 @@ gpu128 = [
 
 [package.metadata]
 requires-dist = [
-    { name = "accelerate", specifier = ">=1.12.0" },
     { name = "datasets", specifier = "==4.4.1" },
     { name = "ipykernel", specifier = ">=7.1.0" },
+    { name = "lightning", specifier = ">=2.6.1" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "ruff", specifier = ">=0.14.4" },
     { name = "torch", marker = "extra == 'cpu'", specifier = ">=2.9.0", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "bert", extra = "cpu" } },
@@ -683,6 +661,44 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/02/49/9d1284d0dc65e2c757b74c6687b6d319b02f822ad039e5c512df9194d9dd/jupyter_core-5.9.1.tar.gz", hash = "sha256:4d09aaff303b9566c3ce657f580bd089ff5c91f5f89cf7d8846c3cdf465b5508", size = 89814, upload-time = "2025-10-16T19:19:18.444Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e7/e7/80988e32bf6f73919a113473a604f5a8f09094de312b9d52b79c2df7612b/jupyter_core-5.9.1-py3-none-any.whl", hash = "sha256:ebf87fdc6073d142e114c72c9e29a9d7ca03fad818c5d300ce2adc1fb0743407", size = 29032, upload-time = "2025-10-16T19:19:16.783Z" },
+]
+
+[[package]]
+name = "lightning"
+version = "2.6.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fsspec", extra = ["http"] },
+    { name = "lightning-utilities" },
+    { name = "packaging" },
+    { name = "pytorch-lightning" },
+    { name = "pyyaml" },
+    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torchmetrics" },
+    { name = "tqdm" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/15/ad/a1c91a795521be252209d45fb080f28a4f1e7244d3b37121fcc6e3e43034/lightning-2.6.1.tar.gz", hash = "sha256:859104b98c61add6fe60d0c623abf749baf25f2950a66ebdfb4bd18aa7decba9", size = 663175, upload-time = "2026-01-30T14:59:13.92Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4a/6d/42640e15a8c34b57dc7ea922152440c0c6692214a08d5282b6e3eb46ddf4/lightning-2.6.1-py3-none-any.whl", hash = "sha256:30e1adac23004c713663928541bd72ecb1371b7abc9aff9f46b7fd2644988d30", size = 853631, upload-time = "2026-01-30T14:59:11.687Z" },
+]
+
+[[package]]
+name = "lightning-utilities"
+version = "0.15.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+    { name = "setuptools" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b8/39/6fc58ca81492db047149b4b8fd385aa1bfb8c28cd7cacb0c7eb0c44d842f/lightning_utilities-0.15.2.tar.gz", hash = "sha256:cdf12f530214a63dacefd713f180d1ecf5d165338101617b4742e8f22c032e24", size = 31090, upload-time = "2025-08-06T13:57:39.242Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/73/3d757cb3fc16f0f9794dd289bcd0c4a031d9cf54d8137d6b984b2d02edf3/lightning_utilities-0.15.2-py3-none-any.whl", hash = "sha256:ad3ab1703775044bbf880dbf7ddaaac899396c96315f3aa1779cec9d618a9841", size = 29431, upload-time = "2025-08-06T13:57:38.046Z" },
 ]
 
 [[package]]
@@ -1572,6 +1588,29 @@ wheels = [
 ]
 
 [[package]]
+name = "pytorch-lightning"
+version = "2.6.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fsspec", extra = ["http"] },
+    { name = "lightning-utilities" },
+    { name = "packaging" },
+    { name = "pyyaml" },
+    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torchmetrics" },
+    { name = "tqdm" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8b/ac/ebd5f6f58691cbd4f73836e43e1727f3814311b960c41f88e259606ca2b2/pytorch_lightning-2.6.1.tar.gz", hash = "sha256:ba08f8901cf226fcca473046ad9346f414e99117762dc869c76e650d5b3d7bdc", size = 665563, upload-time = "2026-01-30T14:59:11.636Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0e/93/c8c361bf0a2fe50f828f32def460e8b8a14b93955d3fd302b1a9b63b19e4/pytorch_lightning-2.6.1-py3-none-any.whl", hash = "sha256:1f8118567ec829e3055f16cf1aa320883a86a47c836951bfd9dcfa34ec7ffd59", size = 857273, upload-time = "2026-01-30T14:59:10.141Z" },
+]
+
+[[package]]
 name = "pytz"
 version = "2025.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2019,6 +2058,25 @@ wheels = [
     { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:c3480edd0ecc95df5f3418687f584037c072392646f94f5181d32bba5446724f" },
     { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:270918b7a7ae46951fae6150bee9fcbd6a908242a1acc8d7e73de1194a041902" },
     { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313t-win_amd64.whl", hash = "sha256:06335b76cbaae9ee94071e69dd79ecfadab76a48edd4ef79a95de0fbf1bc04b4" },
+]
+
+[[package]]
+name = "torchmetrics"
+version = "1.8.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "lightning-utilities" },
+    { name = "numpy" },
+    { name = "packaging" },
+    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/85/2e/48a887a59ecc4a10ce9e8b35b3e3c5cef29d902c4eac143378526e7485cb/torchmetrics-1.8.2.tar.gz", hash = "sha256:cf64a901036bf107f17a524009eea7781c9c5315d130713aeca5747a686fe7a5", size = 580679, upload-time = "2025-09-03T14:00:54.077Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/02/21/aa0f434434c48490f91b65962b1ce863fdcce63febc166ca9fe9d706c2b6/torchmetrics-1.8.2-py3-none-any.whl", hash = "sha256:08382fd96b923e39e904c4d570f3d49e2cc71ccabd2a94e0f895d1f0dac86242", size = 983161, upload-time = "2025-09-03T14:00:51.921Z" },
 ]
 
 [[package]]

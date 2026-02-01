@@ -184,7 +184,7 @@ class Trainer:
         self.use_fabric = use_fabric
 
         if self.use_fabric:
-            self.fabric = Fabric(accelerator=device or "auto", precision="16-mixed")
+            self.fabric = Fabric(accelerator=device or "auto", precision="16")
             self.fabric.launch()
             self.device = self.fabric.device
         else:
