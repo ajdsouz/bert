@@ -52,6 +52,9 @@ class MultiHeadAttention(nn.Module):
         k = split_heads(self.Wk(x), self.n_heads)
         v = split_heads(self.Wv(x), self.n_heads)
 
+        if mask is not None:
+            mask = mask[:, None, None, :] # autobroadcast to [B, H, S, S]
+
         att, weights = attention(q, k, v, mask=mask)
 
         attention_out = merge_heads(att)

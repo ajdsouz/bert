@@ -1,8 +1,9 @@
-from bert.model import BertEncoder, BERTConfigTemplate
+from bert.model import BertEncoder, ModelConfig
 from bert.dataset import TokenDataset
 from bert.trainer import Trainer
 
 import argparse
+import dataclasses
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -24,9 +25,14 @@ parser.add_argument('--checkpoint_dir', type=str)
 parser.add_argument('--log_file', type=str)
 parser.add_argument('--wandb_entity', type=str)
 parser.add_argument('--wandb_project_name', type=str)
+parser.add_argument('--wandb_run_name', type=str)
 parser.add_argument('--model_compile', type=bool)
 parser.add_argument('--device', type=str)
 parser.add_argument('--grad_accumulation_steps', type=int)
+parser.add_argument('--num_epochs', type=int)
+parser.add_argument('--save_every', type=int)
+parser.add_argument('--eval_every', type=int)
+parser.add_argument('--num_tokens', type=int)
 
 args = parser.parse_args()
 
@@ -37,25 +43,38 @@ collate_fn = DataCollatorForLanguageModeling(
     mlm_probability=0.15
 )
 
-train_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size)
-valid_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size)
+train_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_tokens)
+valid_ds = TokenDataset(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_tokens)
 
 train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
 valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
 
-class BERTTestConfig(BERTConfigTemplate):
+"""class BERTTestConfig(BERTConfigTemplate):
     block_size: int = args.block_size
     d_model: int = args.d_model
     d_ffn: int = args.d_ffn
     n_heads: int = args.n_heads
     n_layer: int = args.n_layer
     dropout: float = args.dropout
-    vocab_size: int = args.vocab_size
+    vocab_size: int = args.vocab_size"""
 
-model = BertEncoder(BERTTestConfig)
+bertconfig = ModelConfig(
+    block_size=args.block_size,
+    d_model=args.d_model,
+    d_ffn=args.d_ffn,
+    n_heads=args.n_heads,
+    n_layer=args.n_layer,
+    dropout=args.dropout,
+    vocab_size=args.vocab_size
+)
+
+print(dataclasses.asdict(bertconfig))
+
+model = BertEncoder(bertconfig)
 optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 trainer = Trainer(
+    config=bertconfig,
     model = model,
     loss_fn=loss_fn,
     optimizer=optimizer,
@@ -63,6 +82,7 @@ trainer = Trainer(
     log_file=args.log_file,
     wandb_entity=args.wandb_entity,
     wandb_project_name=args.wandb_project_name,
+    wandb_run_name=args.wandb_run_name,
     compile=args.model_compile,
     device=args.device
 )
@@ -70,6 +90,9 @@ trainer = Trainer(
 trainer.train(
     train_dataloader=train_dl,
     val_dataloader=valid_dl,
-    grad_accumulation_steps=args.grad_accumulation_steps
+    grad_accumulation_steps=args.grad_accumulation_steps,
+    num_epochs=args.num_epochs,
+    eval_every=args.eval_every,
+    save_every=args.save_every
 )
 

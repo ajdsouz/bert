@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 @dataclass
-class BERTConfigTemplate:
+class ModelConfig:
     block_size: int  
     d_model: int
     d_ffn: int
@@ -14,7 +14,7 @@ class BERTConfigTemplate:
     dropout: float
     vocab_size: int
 
-class BERTTestConfig(BERTConfigTemplate):
+"""class BERTTestConfig(BERTConfigTemplate):
     block_size: int = 64
     d_model: int = 64
     d_ffn: int = 256
@@ -29,11 +29,11 @@ class BERTBaseConfig(BERTConfigTemplate):
     n_heads = 12
     n_layer = 12
     dropout = 0.0
-    vocab_size = 30522
+    vocab_size = 30522"""
 
 
 class BertEncoder(nn.Module):
-    def __init__(self, config: BERTConfigTemplate):
+    def __init__(self, config: ModelConfig):
         super().__init__()
         self.config = config
         self.transformer = nn.ModuleDict(dict(
