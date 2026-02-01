@@ -157,14 +157,14 @@ dependencies = [
 
 [package.optional-dependencies]
 cpu = [
-    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 gpu126 = [
-    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" } },
+    { name = "torch", version = "2.9.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" } },
 ]
 gpu128 = [
-    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" } },
+    { name = "torch", version = "2.9.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" } },
 ]
 
 [package.metadata]
@@ -174,9 +174,9 @@ requires-dist = [
     { name = "lightning", specifier = ">=2.6.1" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "ruff", specifier = ">=0.14.4" },
-    { name = "torch", marker = "extra == 'cpu'", specifier = ">=2.9.0", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "bert", extra = "cpu" } },
-    { name = "torch", marker = "extra == 'gpu126'", specifier = ">=2.9.0", index = "https://download.pytorch.org/whl/cu126", conflict = { package = "bert", extra = "gpu126" } },
-    { name = "torch", marker = "extra == 'gpu128'", specifier = ">=2.9.0", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "bert", extra = "gpu128" } },
+    { name = "torch", marker = "extra == 'cpu'", specifier = "==2.9.0", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "bert", extra = "cpu" } },
+    { name = "torch", marker = "extra == 'gpu126'", specifier = "==2.9.0", index = "https://download.pytorch.org/whl/cu126", conflict = { package = "bert", extra = "gpu126" } },
+    { name = "torch", marker = "extra == 'gpu128'", specifier = "==2.9.0", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "bert", extra = "gpu128" } },
     { name = "tqdm", specifier = ">=4.66.5" },
     { name = "transformers", specifier = ">=4.57.3" },
     { name = "wandb", specifier = ">=0.23.0" },
@@ -264,33 +264,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/4c/13/7d740c5849255756bc17888787313b61fd38a0a8304fc4f073dfc46122aa/comm-0.2.3.tar.gz", hash = "sha256:2dc8048c10962d55d7ad693be1e7045d891b7ce8d999c97963a5e3e99c055971", size = 6319, upload-time = "2025-07-25T14:02:04.452Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/60/97/891a0971e1e4a8c5d2b20bbe0e524dc04548d2307fee33cdeba148fd4fc7/comm-0.2.3-py3-none-any.whl", hash = "sha256:c615d91d75f7f04f095b30d1c1711babd43bdc6419c1be9886a85f2f4e489417", size = 7294, upload-time = "2025-07-25T14:02:02.896Z" },
-]
-
-[[package]]
-name = "cuda-bindings"
-version = "12.9.4"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "cuda-pathfinder", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0c/c2/65bfd79292b8ff18be4dd7f7442cea37bcbc1a228c1886f1dea515c45b67/cuda_bindings-12.9.4-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:694ba35023846625ef471257e6b5a4bc8af690f961d197d77d34b1d1db393f56", size = 11760260, upload-time = "2025-10-21T14:51:40.79Z" },
-    { url = "https://files.pythonhosted.org/packages/a9/c1/dabe88f52c3e3760d861401bb994df08f672ec893b8f7592dc91626adcf3/cuda_bindings-12.9.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:fda147a344e8eaeca0c6ff113d2851ffca8f7dfc0a6c932374ee5c47caa649c8", size = 12151019, upload-time = "2025-10-21T14:51:43.167Z" },
-    { url = "https://files.pythonhosted.org/packages/df/6b/9c1b1a6c01392bfdd758e9486f52a1a72bc8f49e98f9355774ef98b5fb4e/cuda_bindings-12.9.4-cp312-cp312-win_amd64.whl", hash = "sha256:696ca75d249ddf287d01b9a698b8e2d8a05046495a9c051ca15659dc52d17615", size = 11586961, upload-time = "2025-10-21T14:51:45.394Z" },
-    { url = "https://files.pythonhosted.org/packages/05/8b/b4b2d1c7775fa403b64333e720cfcfccef8dcb9cdeb99947061ca5a77628/cuda_bindings-12.9.4-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:cf8bfaedc238f3b115d957d1fd6562b7e8435ba57f6d0e2f87d0e7149ccb2da5", size = 11570071, upload-time = "2025-10-21T14:51:47.472Z" },
-    { url = "https://files.pythonhosted.org/packages/63/56/e465c31dc9111be3441a9ba7df1941fe98f4aa6e71e8788a3fb4534ce24d/cuda_bindings-12.9.4-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:32bdc5a76906be4c61eb98f546a6786c5773a881f3b166486449b5d141e4a39f", size = 11906628, upload-time = "2025-10-21T14:51:49.905Z" },
-    { url = "https://files.pythonhosted.org/packages/05/d0/d0e4e2e047d8e899f023fa15ad5e9894ce951253f4c894f1cd68490fdb14/cuda_bindings-12.9.4-cp313-cp313-win_amd64.whl", hash = "sha256:a2e82c8985948f953c2be51df45c3fe11c812a928fca525154fb9503190b3e64", size = 11556719, upload-time = "2025-10-21T14:51:52.248Z" },
-    { url = "https://files.pythonhosted.org/packages/ec/07/6aff13bc1e977e35aaa6b22f52b172e2890c608c6db22438cf7ed2bf43a6/cuda_bindings-12.9.4-cp313-cp313t-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:3adf4958dcf68ae7801a59b73fb00a8b37f8d0595060d66ceae111b1002de38d", size = 11566797, upload-time = "2025-10-21T14:51:54.581Z" },
-    { url = "https://files.pythonhosted.org/packages/a3/84/1e6be415e37478070aeeee5884c2022713c1ecc735e6d82d744de0252eee/cuda_bindings-12.9.4-cp313-cp313t-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:56e0043c457a99ac473ddc926fe0dc4046694d99caef633e92601ab52cbe17eb", size = 11925991, upload-time = "2025-10-21T14:51:56.535Z" },
-    { url = "https://files.pythonhosted.org/packages/4d/3c/972edfddb4ae8a9fccd3c3766ed47453b6f805b6026b32f10209dd4b8ad4/cuda_bindings-12.9.4-cp313-cp313t-win_amd64.whl", hash = "sha256:b32d8b685f0e66f5658bcf4601ef034e89fc2843582886f0a58784a4302da06c", size = 11894363, upload-time = "2025-10-21T14:51:58.633Z" },
-]
-
-[[package]]
-name = "cuda-pathfinder"
-version = "1.3.3"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0b/02/4dbe7568a42e46582248942f54dc64ad094769532adbe21e525e4edf7bc4/cuda_pathfinder-1.3.3-py3-none-any.whl", hash = "sha256:9984b664e404f7c134954a771be8775dfd6180ea1e1aef4a5a37d4be05d9bbb1", size = 27154, upload-time = "2025-12-04T22:35:08.996Z" },
 ]
 
 [[package]]
@@ -673,11 +646,11 @@ dependencies = [
     { name = "packaging" },
     { name = "pytorch-lightning" },
     { name = "pyyaml" },
-    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "torchmetrics" },
     { name = "tqdm" },
     { name = "typing-extensions" },
@@ -1015,7 +988,7 @@ version = "9.10.2.21"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nvidia-cublas-cu12", version = "12.6.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cublas-cu12", version = "12.8.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cublas-cu12", version = "12.8.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fa/41/e79269ce215c857c935fd86bcfe91a451a584dfc27f1e068f568b9ad1ab7/nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:c9132cc3f8958447b4910a1720036d9eff5928cc3179b0a51fb6d167c6cc87d8", size = 705026878, upload-time = "2025-06-06T21:52:51.348Z" },
@@ -1049,7 +1022,7 @@ resolution-markers = [
     "sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/60/bc/7771846d3a0272026c416fbb7e5f4c1f146d6d80704534d0b187dd6f4800/nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:848ef7224d6305cdb2a4df928759dca7b1201874787083b6e7550dd6765ce69a", size = 193109211, upload-time = "2025-03-07T01:44:56.873Z" },
@@ -1137,9 +1110,9 @@ resolution-markers = [
     "sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.8.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cusparse-cu12", version = "12.5.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cublas-cu12", version = "12.8.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusparse-cu12", version = "12.5.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c8/32/f7cd6ce8a7690544d084ea21c26e910a97e077c9b7f07bf5de623ee19981/nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:db9ed69dbef9715071232caa9b69c52ac7de3a95773c2db65bdba85916e4e5c0", size = 267229841, upload-time = "2025-03-07T01:46:54.356Z" },
@@ -1173,7 +1146,7 @@ resolution-markers = [
     "sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bc/f7/cd777c4109681367721b00a106f491e0d0d15cfa1fd59672ce580ce42a97/nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:9b6c161cb130be1a07a27ea6923df8141f3c295852f4b260c65f18f3e0a091dc", size = 288117129, upload-time = "2025-03-07T01:47:40.407Z" },
@@ -1230,24 +1203,9 @@ wheels = [
 name = "nvidia-nvshmem-cu12"
 version = "3.3.20"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'linux'",
-]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/92/9d/3dd98852568fb845ec1f7902c90a22b240fe1cbabda411ccedf2fd737b7b/nvidia_nvshmem_cu12-3.3.20-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:0b0b960da3842212758e4fa4696b94f129090b30e5122fea3c5345916545cff0", size = 124484616, upload-time = "2025-08-04T20:24:59.172Z" },
     { url = "https://files.pythonhosted.org/packages/3b/6c/99acb2f9eb85c29fc6f3a7ac4dccfd992e22666dd08a642b303311326a97/nvidia_nvshmem_cu12-3.3.20-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:d00f26d3f9b2e3c3065be895e3059d6479ea5c638a3f38c9fec49b1b9dd7c1e5", size = 124657145, upload-time = "2025-08-04T20:25:19.995Z" },
-]
-
-[[package]]
-name = "nvidia-nvshmem-cu12"
-version = "3.4.5"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'linux'",
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/6a/03aa43cc9bd3ad91553a88b5f6fb25ed6a3752ae86ce2180221962bc2aa5/nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:0b48363fc6964dede448029434c6abed6c5e37f823cb43c3bcde7ecfc0457e15", size = 138936938, upload-time = "2025-09-06T00:32:05.589Z" },
-    { url = "https://files.pythonhosted.org/packages/b5/09/6ea3ea725f82e1e76684f0708bbedd871fc96da89945adeba65c3835a64c/nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:042f2500f24c021db8a06c5eec2539027d57460e1c1a762055a6554f72c369bd", size = 139103095, upload-time = "2025-09-06T00:32:31.266Z" },
 ]
 
 [[package]]
@@ -1596,11 +1554,11 @@ dependencies = [
     { name = "lightning-utilities" },
     { name = "packaging" },
     { name = "pyyaml" },
-    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "torchmetrics" },
     { name = "tqdm" },
     { name = "typing-extensions" },
@@ -1886,7 +1844,7 @@ wheels = [
 
 [[package]]
 name = "torch"
-version = "2.9.1"
+version = "2.9.0"
 source = { registry = "https://download.pytorch.org/whl/cpu" }
 resolution-markers = [
     "sys_platform == 'darwin'",
@@ -1901,46 +1859,14 @@ dependencies = [
     { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1-cp312-none-macosx_11_0_arm64.whl", hash = "sha256:287242dd1f830846098b5eca847f817aa5c6015ea57ab4c1287809efea7b77eb" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:8924d10d36eac8fe0652a060a03fc2ae52980841850b9a1a2ddb0f27a4f181cd" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1-cp313-none-macosx_11_0_arm64.whl", hash = "sha256:bcee64ae7aa65876ceeae6dcaebe75109485b213528c74939602208a20706e3f" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0-cp312-none-macosx_11_0_arm64.whl", hash = "sha256:4de0ed8cbc457a506dbca40376e206a29efee10756a00f1f3404bf67ad737d04" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:259548471194ab63d7ea273873053a6e3cc23530c1510f01e9d7ad259187bbd0" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0-cp313-none-macosx_11_0_arm64.whl", hash = "sha256:e24836d968b54ef4dfb05594001a61958711ac9224026291e4e3f92f83a6fd7f" },
 ]
 
 [[package]]
 name = "torch"
-version = "2.9.1"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'linux'",
-    "sys_platform != 'linux'",
-]
-dependencies = [
-    { name = "filelock", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "fsspec", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "jinja2", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "networkx", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "setuptools", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "sympy", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "typing-extensions", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0f/27/07c645c7673e73e53ded71705045d6cb5bae94c4b021b03aa8d03eee90ab/torch-2.9.1-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:da5f6f4d7f4940a173e5572791af238cb0b9e21b1aab592bd8b26da4c99f1cd6", size = 104126592, upload-time = "2025-11-12T15:20:41.62Z" },
-    { url = "https://files.pythonhosted.org/packages/19/17/e377a460603132b00760511299fceba4102bd95db1a0ee788da21298ccff/torch-2.9.1-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:27331cd902fb4322252657f3902adf1c4f6acad9dcad81d8df3ae14c7c4f07c4", size = 899742281, upload-time = "2025-11-12T15:22:17.602Z" },
-    { url = "https://files.pythonhosted.org/packages/b1/1a/64f5769025db846a82567fa5b7d21dba4558a7234ee631712ee4771c436c/torch-2.9.1-cp312-cp312-win_amd64.whl", hash = "sha256:81a285002d7b8cfd3fdf1b98aa8df138d41f1a8334fd9ea37511517cedf43083", size = 110940568, upload-time = "2025-11-12T15:21:18.689Z" },
-    { url = "https://files.pythonhosted.org/packages/6e/ab/07739fd776618e5882661d04c43f5b5586323e2f6a2d7d84aac20d8f20bd/torch-2.9.1-cp312-none-macosx_11_0_arm64.whl", hash = "sha256:c0d25d1d8e531b8343bea0ed811d5d528958f1dcbd37e7245bc686273177ad7e", size = 74479191, upload-time = "2025-11-12T15:21:25.816Z" },
-    { url = "https://files.pythonhosted.org/packages/20/60/8fc5e828d050bddfab469b3fe78e5ab9a7e53dda9c3bdc6a43d17ce99e63/torch-2.9.1-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:c29455d2b910b98738131990394da3e50eea8291dfeb4b12de71ecf1fdeb21cb", size = 104135743, upload-time = "2025-11-12T15:21:34.936Z" },
-    { url = "https://files.pythonhosted.org/packages/f2/b7/6d3f80e6918213babddb2a37b46dbb14c15b14c5f473e347869a51f40e1f/torch-2.9.1-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:524de44cd13931208ba2c4bde9ec7741fd4ae6bfd06409a604fc32f6520c2bc9", size = 899749493, upload-time = "2025-11-12T15:24:36.356Z" },
-    { url = "https://files.pythonhosted.org/packages/a6/47/c7843d69d6de8938c1cbb1eba426b1d48ddf375f101473d3e31a5fc52b74/torch-2.9.1-cp313-cp313-win_amd64.whl", hash = "sha256:545844cc16b3f91e08ce3b40e9c2d77012dd33a48d505aed34b7740ed627a1b2", size = 110944162, upload-time = "2025-11-12T15:21:53.151Z" },
-    { url = "https://files.pythonhosted.org/packages/28/0e/2a37247957e72c12151b33a01e4df651d9d155dd74d8cfcbfad15a79b44a/torch-2.9.1-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:5be4bf7496f1e3ffb1dd44b672adb1ac3f081f204c5ca81eba6442f5f634df8e", size = 74830751, upload-time = "2025-11-12T15:21:43.792Z" },
-    { url = "https://files.pythonhosted.org/packages/4b/f7/7a18745edcd7b9ca2381aa03353647bca8aace91683c4975f19ac233809d/torch-2.9.1-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:30a3e170a84894f3652434b56d59a64a2c11366b0ed5776fab33c2439396bf9a", size = 104142929, upload-time = "2025-11-12T15:21:48.319Z" },
-    { url = "https://files.pythonhosted.org/packages/f4/dd/f1c0d879f2863ef209e18823a988dc7a1bf40470750e3ebe927efdb9407f/torch-2.9.1-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:8301a7b431e51764629208d0edaa4f9e4c33e6df0f2f90b90e261d623df6a4e2", size = 899748978, upload-time = "2025-11-12T15:23:04.568Z" },
-    { url = "https://files.pythonhosted.org/packages/1f/9f/6986b83a53b4d043e36f3f898b798ab51f7f20fdf1a9b01a2720f445043d/torch-2.9.1-cp313-cp313t-win_amd64.whl", hash = "sha256:2e1c42c0ae92bf803a4b2409fdfed85e30f9027a66887f5e7dcdbc014c7531db", size = 111176995, upload-time = "2025-11-12T15:22:01.618Z" },
-    { url = "https://files.pythonhosted.org/packages/40/60/71c698b466dd01e65d0e9514b5405faae200c52a76901baf6906856f17e4/torch-2.9.1-cp313-none-macosx_11_0_arm64.whl", hash = "sha256:2c14b3da5df416cf9cb5efab83aa3056f5b8cd8620b8fde81b4987ecab730587", size = 74480347, upload-time = "2025-11-12T15:21:57.648Z" },
-]
-
-[[package]]
-name = "torch"
-version = "2.9.1+cpu"
+version = "2.9.0+cpu"
 source = { registry = "https://download.pytorch.org/whl/cpu" }
 resolution-markers = [
     "sys_platform == 'linux'",
@@ -1956,22 +1882,67 @@ dependencies = [
     { name = "typing-extensions", marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:3bf9b442a51a2948e41216a76d7ab00f0694cfcaaa51b6f9bcab57b7f89843e6" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:7417d8c565f219d3455654cb431c6d892a3eb40246055e14d645422de13b9ea1" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp312-cp312-win_amd64.whl", hash = "sha256:a4e06b4f441675d26b462123c8a83e77c55f1ec8ebc081203be2db1ea8054add" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp312-cp312-win_arm64.whl", hash = "sha256:1abe31f14b560c1f062699e966cb08ef5b67518a1cfac2d8547a3dbcd8387b06" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:3e532e553b37ee859205a9b2d1c7977fd6922f53bbb1b9bfdd5bdc00d1a60ed4" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:39b3dff6d8fba240ae0d1bede4ca11c2531ae3b47329206512d99e17907ff74b" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313-win_amd64.whl", hash = "sha256:404a7ab2fffaf2ca069e662f331eb46313692b2f1630df2720094284f390ccef" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313-win_arm64.whl", hash = "sha256:161decbff26a33f13cb5ba6d2c8f458bbf56193bcc32ecc70be6dd4c7a3ee79d" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:01b1884f724977a20c7da2f640f1c7b37f4a2c117a7f4a6c1c0424d14cb86322" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:031a597147fa81b1e6d79ccf1ad3ccc7fafa27941d6cf26ff5caaa384fb20e92" },
-    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.1%2Bcpu-cp313-cp313t-win_amd64.whl", hash = "sha256:e586ab1363e3f86aa4cc133b7fdcf98deb1d2c13d43a7a6e5a6a18e9c5364893" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:3a651434ae1248b0568c12b5f9e3acc8942eb28378d9d04a79302938b68c6f24" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:28f6eb31b08180a5c5e98d5bc14eef6909c9f5a1dbff9632c3e02a8773449349" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp312-cp312-win_amd64.whl", hash = "sha256:e438061b87ec7dd6018fca9f975219889aa0a3f6cdc3ea10dd0ae2bc7f1c47ce" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp312-cp312-win_arm64.whl", hash = "sha256:eb13ff1c34e338d722e76a4fd83b8d282782505bd1b99af4b3c32da66eba6eb4" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:be4438d8dad7f0d5a5e54f0feef8a893446894ec87f102bb1d82dcc4518542e4" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:6c9b217584400963d5b4daddb3711ec7a3778eab211e18654fba076cce3b8682" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313-win_amd64.whl", hash = "sha256:728372e3f58c5826445f677746e5311c1935c1a7c59599f73a49ded850e038e8" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313-win_arm64.whl", hash = "sha256:95e56c26f919fbb98f16e7a0b87af494b893f9da9a65a020f17a01c13e520a81" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:6c777160288b08555820781ae0f3a2c67a59bd24b065e88ca1ec20e2f9dc8ac7" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:528fd338311f31c9fb18038cafd00e6eae0bf5ad5577521701acb62510753d18" },
+    { url = "https://download.pytorch.org/whl/cpu/torch-2.9.0%2Bcpu-cp313-cp313t-win_amd64.whl", hash = "sha256:d572863990e7d2762b547735ef589f6350d9eb4e441d38753a1c33636698cf4c" },
 ]
 
 [[package]]
 name = "torch"
-version = "2.9.1+cu128"
+version = "2.9.0+cu126"
+source = { registry = "https://download.pytorch.org/whl/cu126" }
+resolution-markers = [
+    "sys_platform == 'linux'",
+    "sys_platform != 'linux'",
+]
+dependencies = [
+    { name = "filelock", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "fsspec", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "jinja2", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "networkx", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cublas-cu12", version = "12.6.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cuda-cupti-cu12", version = "12.6.80", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cuda-nvrtc-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cuda-runtime-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cudnn-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cufft-cu12", version = "11.3.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cufile-cu12", version = "1.11.1.6", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-curand-cu12", version = "10.3.7.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusolver-cu12", version = "11.7.1.2", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusparse-cu12", version = "12.5.4.2", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusparselt-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nccl-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.6.85", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvshmem-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvtx-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "setuptools", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "sympy", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "triton", version = "3.5.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "typing-extensions", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+]
+wheels = [
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:f80b9bdd81a8d4d48bea4fbab027b728e399bf733a7330f521924ae25aa48958" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:ea68e3146cd7d770c662f0120f18b8b4a6d96be4314e7196047b282887828cfb" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp312-cp312-win_amd64.whl", hash = "sha256:321de9e00dfb066fac4e182c62b6f0a10eb7943924daecb261a7490f98ce3641" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:aa7f9dcbf0530ec10a211471c8afb5328d5bbcab6f14fd1b78b5e6f2f14ed617" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:0c45b636ed6c02ccee624ec53d844c32b1db9beb23d619f37c41152467904cd5" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp313-cp313-win_amd64.whl", hash = "sha256:651b1fad5f3eacd2c2fbae76b526cd75758e9839a04ab4fb48e78ebc51fb5e1a" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:faefc73b94dd2b06840bb5e54fa0c25699792cb4ba51503ed8add6f8a6839617" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:60aee3a5ab718607a169167ddd771e6b4e712e87ea908dffb6c4d95927cd04d7" },
+    { url = "https://download.pytorch.org/whl/cu126/torch-2.9.0%2Bcu126-cp313-cp313t-win_amd64.whl", hash = "sha256:a4036ef8803279c5858ecd3a88b780300d824c8a37852658bf44a9069ad8e5d4" },
+]
+
+[[package]]
+name = "torch"
+version = "2.9.0+cu128"
 source = { registry = "https://download.pytorch.org/whl/cu128" }
 resolution-markers = [
     "sys_platform == 'linux'",
@@ -1995,69 +1966,71 @@ dependencies = [
     { name = "nvidia-cusparselt-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "nvidia-nccl-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-nvshmem-cu12", version = "3.3.20", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvshmem-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "nvidia-nvtx-cu12", version = "12.8.90", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "setuptools", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "sympy", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "triton", version = "3.5.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "triton", version = "3.5.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "typing-extensions", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
 ]
 wheels = [
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:1176f250311fa95cc3bca8077af323e0d73ea385ba266e096af82e7e2b91f256" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:7cb4018f4ce68b61fd3ef87dc1c4ca520731c7b5b200e360ad47b612d7844063" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp312-cp312-win_amd64.whl", hash = "sha256:3a01f0b64c10a82d444d9fd06b3e8c567b1158b76b2764b8f51bfd8f535064b0" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:0b80b7555dcd0a75b7b06016991f01281a0bb078cf28fa2d1dfb949fad2fbd07" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:63381a109a569b280ed3319da89d3afe5cf9ab5c879936382a212affb5c90552" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp313-cp313-win_amd64.whl", hash = "sha256:ad9183864acdd99fc5143d7ca9d3d2e7ddfc9a9600ff43217825d4e5e9855ccc" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:2314521c74d76e513c53bb72c0ce3511ef0295ff657a432790df6c207e5d7962" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:4454a4faca31af81566e3a4208f10f20b8a6d9cfe42791b0ca7ff134326468fc" },
-    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.1%2Bcu128-cp313-cp313t-win_amd64.whl", hash = "sha256:24420e430e77136f7079354134b34e7ba9d87e539f5ac84c33b08e5c13412ebe" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:e1765625084e320f1eb2f4eb5fd9d14d39d08d7a1880c10a307ce5de20831d27" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:87c62d3b95f1a2270bd116dbd47dc515c0b2035076fbb4a03b4365ea289e89c4" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp312-cp312-win_amd64.whl", hash = "sha256:c97dc47a1f64745d439dd9471a96d216b728d528011029b4f9ae780e985529e0" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:4d76f71345af47f022c7fa55edd0c1810d01af89dcb9edcfdfafe3d2a0f7a6b8" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:97def0087f8ef171b9002ea500baffdd440c7bdd559c23c38bbf8781b67e9364" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp313-cp313-win_amd64.whl", hash = "sha256:9cba9f0fa2e1b70fffdcec1235a1bb727cbff7e7b118ba111b2b7f984b7087e2" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:dacbfc19608e60f78975c47d605c7d39b81afdf1983e93e94c17f60646b131e0" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:8ce575fb71b878f5016df0a8a438c7c28f7f4be270af4119b5ad9ab62b0e470a" },
+    { url = "https://download.pytorch.org/whl/cu128/torch-2.9.0%2Bcu128-cp313-cp313t-win_amd64.whl", hash = "sha256:26effd07b9ee31c2db8988860317ba74361967bb4f9228af5a56907215cc27b5" },
 ]
 
 [[package]]
 name = "torch"
-version = "2.10.0+cu126"
-source = { registry = "https://download.pytorch.org/whl/cu126" }
+version = "2.9.1"
+source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "sys_platform == 'linux'",
     "sys_platform != 'linux'",
 ]
 dependencies = [
-    { name = "cuda-bindings", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "filelock", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "fsspec", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "jinja2", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "networkx", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cublas-cu12", version = "12.6.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cuda-cupti-cu12", version = "12.6.80", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cuda-nvrtc-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cuda-runtime-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cudnn-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cufft-cu12", version = "11.3.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cufile-cu12", version = "1.11.1.6", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-curand-cu12", version = "10.3.7.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cusolver-cu12", version = "11.7.1.2", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cusparse-cu12", version = "12.5.4.2", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-cusparselt-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-nccl-cu12", marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.6.85", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-nvshmem-cu12", version = "3.4.5", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "nvidia-nvtx-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "setuptools", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "sympy", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "triton", version = "3.6.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "typing-extensions", marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "filelock", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "fsspec", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "jinja2", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "networkx", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cublas-cu12", version = "12.8.4.1", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cuda-cupti-cu12", version = "12.8.90", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cuda-nvrtc-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cuda-runtime-cu12", version = "12.8.90", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cudnn-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cufft-cu12", version = "11.3.3.83", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cufile-cu12", version = "1.13.1.3", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-curand-cu12", version = "10.3.9.90", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusolver-cu12", version = "11.7.3.90", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusparse-cu12", version = "12.5.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-cusparselt-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nccl-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.93", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvshmem-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "nvidia-nvtx-cu12", version = "12.8.90", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "setuptools", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "sympy", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
+    { name = "triton", version = "3.5.1", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "typing-extensions", marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
 ]
 wheels = [
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:81264238b3d8840276dd30c31f393e325b8f5da6390d18ac2a80dacecfd693ea" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:2a7a569206f07965eff69b28e147676540bb0ba6e1a39410802b6e4708cb8356" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp312-cp312-win_amd64.whl", hash = "sha256:95d8409b8a15191de4c2958e86ca47f3ea8f9739b994ee4ca0e7586f37336413" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:9ffbf240bc193841ba0a79976510aa9ec14c95a57699257b581bc782316b592f" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:8568052253534abe27b3ac56d301f69d35ef5ce16479e6a3d7808fb052310919" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313-win_amd64.whl", hash = "sha256:91e21e7ad572bf0136e5b7f192714f120c8abde8e128f1a0759f158951643822" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:c3480edd0ecc95df5f3418687f584037c072392646f94f5181d32bba5446724f" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:270918b7a7ae46951fae6150bee9fcbd6a908242a1acc8d7e73de1194a041902" },
-    { url = "https://download.pytorch.org/whl/cu126/torch-2.10.0%2Bcu126-cp313-cp313t-win_amd64.whl", hash = "sha256:06335b76cbaae9ee94071e69dd79ecfadab76a48edd4ef79a95de0fbf1bc04b4" },
+    { url = "https://files.pythonhosted.org/packages/0f/27/07c645c7673e73e53ded71705045d6cb5bae94c4b021b03aa8d03eee90ab/torch-2.9.1-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:da5f6f4d7f4940a173e5572791af238cb0b9e21b1aab592bd8b26da4c99f1cd6", size = 104126592, upload-time = "2025-11-12T15:20:41.62Z" },
+    { url = "https://files.pythonhosted.org/packages/19/17/e377a460603132b00760511299fceba4102bd95db1a0ee788da21298ccff/torch-2.9.1-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:27331cd902fb4322252657f3902adf1c4f6acad9dcad81d8df3ae14c7c4f07c4", size = 899742281, upload-time = "2025-11-12T15:22:17.602Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/1a/64f5769025db846a82567fa5b7d21dba4558a7234ee631712ee4771c436c/torch-2.9.1-cp312-cp312-win_amd64.whl", hash = "sha256:81a285002d7b8cfd3fdf1b98aa8df138d41f1a8334fd9ea37511517cedf43083", size = 110940568, upload-time = "2025-11-12T15:21:18.689Z" },
+    { url = "https://files.pythonhosted.org/packages/6e/ab/07739fd776618e5882661d04c43f5b5586323e2f6a2d7d84aac20d8f20bd/torch-2.9.1-cp312-none-macosx_11_0_arm64.whl", hash = "sha256:c0d25d1d8e531b8343bea0ed811d5d528958f1dcbd37e7245bc686273177ad7e", size = 74479191, upload-time = "2025-11-12T15:21:25.816Z" },
+    { url = "https://files.pythonhosted.org/packages/20/60/8fc5e828d050bddfab469b3fe78e5ab9a7e53dda9c3bdc6a43d17ce99e63/torch-2.9.1-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:c29455d2b910b98738131990394da3e50eea8291dfeb4b12de71ecf1fdeb21cb", size = 104135743, upload-time = "2025-11-12T15:21:34.936Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/b7/6d3f80e6918213babddb2a37b46dbb14c15b14c5f473e347869a51f40e1f/torch-2.9.1-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:524de44cd13931208ba2c4bde9ec7741fd4ae6bfd06409a604fc32f6520c2bc9", size = 899749493, upload-time = "2025-11-12T15:24:36.356Z" },
+    { url = "https://files.pythonhosted.org/packages/a6/47/c7843d69d6de8938c1cbb1eba426b1d48ddf375f101473d3e31a5fc52b74/torch-2.9.1-cp313-cp313-win_amd64.whl", hash = "sha256:545844cc16b3f91e08ce3b40e9c2d77012dd33a48d505aed34b7740ed627a1b2", size = 110944162, upload-time = "2025-11-12T15:21:53.151Z" },
+    { url = "https://files.pythonhosted.org/packages/28/0e/2a37247957e72c12151b33a01e4df651d9d155dd74d8cfcbfad15a79b44a/torch-2.9.1-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:5be4bf7496f1e3ffb1dd44b672adb1ac3f081f204c5ca81eba6442f5f634df8e", size = 74830751, upload-time = "2025-11-12T15:21:43.792Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/f7/7a18745edcd7b9ca2381aa03353647bca8aace91683c4975f19ac233809d/torch-2.9.1-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:30a3e170a84894f3652434b56d59a64a2c11366b0ed5776fab33c2439396bf9a", size = 104142929, upload-time = "2025-11-12T15:21:48.319Z" },
+    { url = "https://files.pythonhosted.org/packages/f4/dd/f1c0d879f2863ef209e18823a988dc7a1bf40470750e3ebe927efdb9407f/torch-2.9.1-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:8301a7b431e51764629208d0edaa4f9e4c33e6df0f2f90b90e261d623df6a4e2", size = 899748978, upload-time = "2025-11-12T15:23:04.568Z" },
+    { url = "https://files.pythonhosted.org/packages/1f/9f/6986b83a53b4d043e36f3f898b798ab51f7f20fdf1a9b01a2720f445043d/torch-2.9.1-cp313-cp313t-win_amd64.whl", hash = "sha256:2e1c42c0ae92bf803a4b2409fdfed85e30f9027a66887f5e7dcdbc014c7531db", size = 111176995, upload-time = "2025-11-12T15:22:01.618Z" },
+    { url = "https://files.pythonhosted.org/packages/40/60/71c698b466dd01e65d0e9514b5405faae200c52a76901baf6906856f17e4/torch-2.9.1-cp313-none-macosx_11_0_arm64.whl", hash = "sha256:2c14b3da5df416cf9cb5efab83aa3056f5b8cd8620b8fde81b4987ecab730587", size = 74480347, upload-time = "2025-11-12T15:21:57.648Z" },
 ]
 
 [[package]]
@@ -2068,11 +2041,11 @@ dependencies = [
     { name = "lightning-utilities" },
     { name = "numpy" },
     { name = "packaging" },
-    { name = "torch", version = "2.9.1", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
+    { name = "torch", version = "2.9.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
     { name = "torch", version = "2.9.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra != 'extra-4-bert-gpu126' and extra != 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-4-bert-cpu') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128') or (extra == 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.9.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu126') or (extra != 'extra-4-bert-gpu126' and extra == 'extra-4-bert-gpu128') or (extra != 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
-    { name = "torch", version = "2.10.0+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "extra == 'extra-4-bert-gpu126' or (extra == 'extra-4-bert-cpu' and extra == 'extra-4-bert-gpu128')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/85/2e/48a887a59ecc4a10ce9e8b35b3e3c5cef29d902c4eac143378526e7485cb/torchmetrics-1.8.2.tar.gz", hash = "sha256:cf64a901036bf107f17a524009eea7781c9c5315d130713aeca5747a686fe7a5", size = 580679, upload-time = "2025-09-03T14:00:54.077Z" }
 wheels = [
@@ -2142,6 +2115,22 @@ wheels = [
 
 [[package]]
 name = "triton"
+version = "3.5.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "sys_platform == 'linux'",
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/9b/30988039e1e84df7554fba24e6a734d2d0e847af33cabdf9b532b3c51456/triton-3.5.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:7da21fccceafc163e3a5e857abe34351ef76345af06cabf9637a914742671f0b", size = 159946647, upload-time = "2025-10-15T19:15:56.325Z" },
+    { url = "https://files.pythonhosted.org/packages/f5/3a/e991574f3102147b642e49637e0281e9bb7c4ba254edb2bab78247c85e01/triton-3.5.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c9e71db82261c4ffa3921cd050cd5faa18322d2d405c30eb56084afaff3b0833", size = 170476535, upload-time = "2025-10-13T16:38:05.18Z" },
+    { url = "https://files.pythonhosted.org/packages/cd/85/e37f1197acb04c8f3d83851d23d5d6ed5060ef74580668b112e23fdfa203/triton-3.5.0-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:188da5b81fa2f8322c27fec1627703eac24cb9bb7ab0dfbe9925973bc1b070d3", size = 159958970, upload-time = "2025-10-15T19:16:01.717Z" },
+    { url = "https://files.pythonhosted.org/packages/6c/29/10728de8a6e932e517c10773486b8e99f85d1b1d9dd87d9a9616e1fef4a1/triton-3.5.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e6bb9aa5519c084a333acdba443789e50012a4b851cd486c54f0b8dc2a8d3a12", size = 170487289, upload-time = "2025-10-13T16:38:11.662Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/1d/38258f05010ac17a7b058c022911c9cae6526e149b7397134a048cf5a6c2/triton-3.5.0-cp313-cp313t-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:03127d9b33aaf979c856676b394bc059ec1d68cb6da68ae03f62dd8ad77a04ae", size = 160073012, upload-time = "2025-10-15T19:16:07.477Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/38/db80e48b9220c9bce872b0f616ad0446cdf554a40b85c7865cbca99ab3c2/triton-3.5.0-cp313-cp313t-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c83f2343e1a220a716c7b3ab9fccfcbe3ad4020d189549200e2d2e8d5868bed9", size = 170577179, upload-time = "2025-10-13T16:38:17.865Z" },
+]
+
+[[package]]
+name = "triton"
 version = "3.5.1"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
@@ -2154,22 +2143,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/27/46/8c3bbb5b0a19313f50edcaa363b599e5a1a5ac9683ead82b9b80fe497c8d/triton-3.5.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f3f4346b6ebbd4fad18773f5ba839114f4826037c9f2f34e0148894cd5dd3dba", size = 170470410, upload-time = "2025-11-11T17:41:06.319Z" },
     { url = "https://files.pythonhosted.org/packages/84/1e/7df59baef41931e21159371c481c31a517ff4c2517343b62503d0cd2be99/triton-3.5.1-cp313-cp313t-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:02c770856f5e407d24d28ddc66e33cf026e6f4d360dcb8b2fabe6ea1fc758621", size = 160072799, upload-time = "2025-11-11T17:52:07.293Z" },
     { url = "https://files.pythonhosted.org/packages/37/92/e97fcc6b2c27cdb87ce5ee063d77f8f26f19f06916aa680464c8104ef0f6/triton-3.5.1-cp313-cp313t-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:0b4d2c70127fca6a23e247f9348b8adde979d2e7a20391bfbabaac6aebc7e6a8", size = 170579924, upload-time = "2025-11-11T17:41:12.455Z" },
-]
-
-[[package]]
-name = "triton"
-version = "3.6.0"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'linux'",
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/17/5d/08201db32823bdf77a0e2b9039540080b2e5c23a20706ddba942924ebcd6/triton-3.6.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:374f52c11a711fd062b4bfbb201fd9ac0a5febd28a96fb41b4a0f51dde3157f4", size = 176128243, upload-time = "2026-01-20T16:16:07.857Z" },
-    { url = "https://files.pythonhosted.org/packages/ab/a8/cdf8b3e4c98132f965f88c2313a4b493266832ad47fb52f23d14d4f86bb5/triton-3.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:74caf5e34b66d9f3a429af689c1c7128daba1d8208df60e81106b115c00d6fca", size = 188266850, upload-time = "2026-01-20T16:00:43.041Z" },
-    { url = "https://files.pythonhosted.org/packages/3c/12/34d71b350e89a204c2c7777a9bba0dcf2f19a5bfdd70b57c4dbc5ffd7154/triton-3.6.0-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:448e02fe6dc898e9e5aa89cf0ee5c371e99df5aa5e8ad976a80b93334f3494fd", size = 176133521, upload-time = "2026-01-20T16:16:13.321Z" },
-    { url = "https://files.pythonhosted.org/packages/f9/0b/37d991d8c130ce81a8728ae3c25b6e60935838e9be1b58791f5997b24a54/triton-3.6.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:10c7f76c6e72d2ef08df639e3d0d30729112f47a56b0c81672edc05ee5116ac9", size = 188289450, upload-time = "2026-01-20T16:00:49.136Z" },
-    { url = "https://files.pythonhosted.org/packages/ce/4e/41b0c8033b503fd3cfcd12392cdd256945026a91ff02452bef40ec34bee7/triton-3.6.0-cp313-cp313t-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1722e172d34e32abc3eb7711d0025bb69d7959ebea84e3b7f7a341cd7ed694d6", size = 176276087, upload-time = "2026-01-20T16:16:18.989Z" },
-    { url = "https://files.pythonhosted.org/packages/35/f8/9c66bfc55361ec6d0e4040a0337fb5924ceb23de4648b8a81ae9d33b2b38/triton-3.6.0-cp313-cp313t-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:d002e07d7180fd65e622134fbd980c9a3d4211fb85224b56a0a0efbd422ab72f", size = 188400296, upload-time = "2026-01-20T16:00:56.042Z" },
 ]
 
 [[package]]
