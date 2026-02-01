@@ -7,7 +7,7 @@ import dataclasses
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from transformers import DataCollatorForLanguageModeling, AutoTokenizer
+from transformers import DataCollatorForLanguageModeling, AutoTokenizer, get_linear_schedule_with_warmup
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str)
@@ -68,23 +68,33 @@ bertconfig = ModelConfig(
     vocab_size=args.vocab_size
 )
 
-print(dataclasses.asdict(bertconfig))
+# print(dataclasses.asdict(bertconfig))
+steps_per_epoch = len(train_dl) // args.grad_accumulation_steps
+total_steps = steps_per_epoch * args.num_epochs
+warmup_steps = int(0.1 * total_steps)
 
 model = BertEncoder(bertconfig)
 optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+lr_scheduler = get_linear_schedule_with_warmup(
+    optimizer = optimizer,
+    num_warmup_steps= warmup_steps,
+    num_training_steps=total_steps
+)
 loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 trainer = Trainer(
     config=bertconfig,
     model = model,
     loss_fn=loss_fn,
     optimizer=optimizer,
+    scheduler = lr_scheduler,
     checkpoint_dir=args.checkpoint_dir,
     log_file=args.log_file,
     wandb_entity=args.wandb_entity,
     wandb_project_name=args.wandb_project_name,
     wandb_run_name=args.wandb_run_name,
     compile=args.model_compile,
-    device=args.device
+    device=args.device,
+    use_fabric=True
 )
 
 trainer.train(

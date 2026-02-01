@@ -16,7 +16,7 @@ uv run scripts/train.py \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="custom trainer pre accelerate" \
+    --wandb_run_name="custom trainer fabric fp32 with linear lr (transformers)" \
     --model_compile=True \
     --device="cpu" \
     --grad_accumulation_steps=4 \
