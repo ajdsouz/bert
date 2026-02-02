@@ -9,6 +9,7 @@ wheels/
 notes/
 wandb/
 ckpt/
+logs/
 # Virtual environments
 .venv
 
