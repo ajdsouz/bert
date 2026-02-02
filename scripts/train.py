@@ -26,7 +26,7 @@ parser.add_argument('--log_file', type=str)
 parser.add_argument('--wandb_entity', type=str)
 parser.add_argument('--wandb_project_name', type=str)
 parser.add_argument('--wandb_run_name', type=str)
-parser.add_argument('--model_compile', type=bool)
+# parser.add_argument('--model_compile', type=str)
 parser.add_argument('--device', type=str)
 parser.add_argument('--grad_accumulation_steps', type=int)
 parser.add_argument('--num_epochs', type=int)
@@ -84,7 +84,7 @@ trainer = Trainer(
     wandb_entity=args.wandb_entity,
     wandb_project_name=args.wandb_project_name,
     wandb_run_name=args.wandb_run_name,
-    compile=args.model_compile,
+    # compile=args.model_compile,
     device=args.device
 )
 

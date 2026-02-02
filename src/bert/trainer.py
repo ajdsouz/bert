@@ -22,7 +22,7 @@ class Trainer:
             loss_fn,
             optimizer: torch.optim.Optimizer,
             scheduler: torch.optim.lr_scheduler.LRScheduler | None = None,
-            compile: bool = True,
+            # compile: bool = True,
             device: str | None = "cuda",
     ) -> None:
         self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
@@ -45,9 +45,9 @@ class Trainer:
         if not self.logger.handlers:
             self.logger.addHandler(handler)
 
-        if self.compile:
-            self.model = torch.compile(self.model)
-            self.logger.info("Model is compiled!")
+        # if self.compile:
+        #     self.model = torch.compile(self.model)
+        #     self.logger.info("Model is compiled!")
 
         wandb.init(
             entity=wandb_entity,
