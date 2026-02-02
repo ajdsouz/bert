@@ -7,6 +7,7 @@ from tqdm import tqdm
 import dataclasses
 import torch
 import torch.nn as nn
+from torch.amp import GradScaler, autocast
 
 
 class Trainer:
@@ -22,7 +23,6 @@ class Trainer:
             loss_fn,
             optimizer: torch.optim.Optimizer,
             scheduler: torch.optim.lr_scheduler.LRScheduler | None = None,
-            # compile: bool = True,
             device: str | None = "cuda",
     ) -> None:
         self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
@@ -38,6 +38,8 @@ class Trainer:
 
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
+
+        self.scaler = GradScaler()
 
         handler = logging.FileHandler(log_file, encoding="utf-8", mode="a")
         formatter = logging.Formatter("{levelname:<8} {message}", style="{")
@@ -62,10 +64,16 @@ class Trainer:
         attention_mask = batch['attention_mask'].to(self.device)
         labels =batch['labels'].to(self.device)
         labels = torch.where((labels >= 0) & (labels < self.model.config.vocab_size), labels, -100)
-        outputs = self.model(input_ids, attention_mask)
-        loss = self.loss_fn(
-            outputs.view(-1, outputs.size(-1)), labels.view(-1)
-        )
+
+        with autocast(
+            device_type=self.device,
+            dtype=torch.float16,
+        ):
+            
+            outputs = self.model(input_ids, attention_mask)
+            loss = self.loss_fn(
+                outputs.view(-1, outputs.size(-1)), labels.view(-1)
+            )
         return loss
 
 
@@ -73,9 +81,11 @@ class Trainer:
         self.model.eval()
         total_loss = 0.0
         with torch.no_grad():
-            for batch in val_dataloader:
-                loss = self._common_step(batch)
-                total_loss += loss.item()
+            with tqdm(total=len(val_dataloader), desc="Validation loop", dynamic_ncols=True) as vbar:
+                for batch in val_dataloader:
+                    loss = self._common_step(batch)
+                    total_loss += loss.item()
+                    vbar.update(1)
 
         return total_loss / len(val_dataloader)
 
@@ -108,7 +118,7 @@ class Trainer:
                     
                     loss = self._common_step(batch)
                     loss_scaled = loss / grad_accumulation_steps
-                    loss_scaled.backward()
+                    self.scaler.scale(loss_scaled).backward()
                     
 
                     if ((idx + 1) % grad_accumulation_steps == 0) or (idx + 1 == len(train_dataloader)):
@@ -117,7 +127,8 @@ class Trainer:
                             max_norm=grad_clip_max_norm
                         )
                         
-                        self.optimizer.step()
+                        self.scaler.step(self.optimizer)
+                        self.scaler.update()
                         self.optimizer.zero_grad(set_to_none=True)
                         if self.scheduler:
                             self.scheduler.step()

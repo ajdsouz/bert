@@ -16,7 +16,7 @@ uv run scripts/train.py \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="custom trainer pure torch no mixed precision" \
+    --wandb_run_name="custom trainer pure torch mixed precision support" \
     --device="cpu" \
     --grad_accumulation_steps=4 \
     --num_epochs=1 \
