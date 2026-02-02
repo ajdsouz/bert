@@ -8,7 +8,6 @@ authors = [
 ]
 requires-python = ">=3.12,<3.14"
 dependencies = [
-    "accelerate>=1.12.0",
     "datasets==4.4.1",
     "ipykernel>=7.1.0",
     "requests>=2.32.5",
@@ -20,21 +19,21 @@ dependencies = [
 
 [project.optional-dependencies]
 cpu = [
-    "torch>=2.9.0"
+    "torch==2.4.1"
 ]
-gpu126 = [
-    "torch>=2.9.0"
+gpu121 = [
+    "torch==2.4.1"
 ]
-gpu128 = [
-    "torch>=2.9.0"
+gpu118 = [
+    "torch==2.4.1"
 ]
 
 [tool.uv]
 conflicts = [
     [
         {extra = "cpu"},
-        {extra = "gpu126"},
-        {extra = "gpu128"},
+        {extra = "gpu121"},
+        {extra = "gpu118"},
     ]
 ]
 [build-system]
@@ -45,8 +44,8 @@ build-backend = "uv_build"
 bert = { path = "src" }
 torch = [
     {index = "pytorch-cpu", extra = "cpu"},
-    {index = "pytorch-gpu126", extra = "gpu126"},
-    {index = "pytorch-gpu128", extra = "gpu128"},
+    {index = "pytorch-gpu121", extra = "gpu121"},
+    {index = "pytorch-gpu118", extra = "gpu118"},
 ]
 
 [[tool.uv.index]]
@@ -59,12 +58,12 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [[tool.uv.index]]
-name = "pytorch-gpu128"
-url = "https://download.pytorch.org/whl/cu128"
+name = "pytorch-gpu118"
+url = "https://download.pytorch.org/whl/cu118"
 explicit = true
 
 [[tool.uv.index]]
-name = "pytorch-gpu126"
-url = "https://download.pytorch.org/whl/cu126"
+name = "pytorch-gpu121"
+url = "https://download.pytorch.org/whl/cu121"
 explicit = true
 

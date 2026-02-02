@@ -16,10 +16,12 @@ uv run scripts/train.py \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="custom trainer pre accelerate" \
-    --model_compile=True \
+    --wandb_run_name="custom trainer pure torch no mixed precision" \
+    --model_compile=True\
     --device="cpu" \
     --grad_accumulation_steps=4 \
     --num_epochs=1 \
     --save_every=100 \
     --eval_every=50 \
+    --num_train_tokens=1_000_000 \
+    --num_val_tokens=1_000 \

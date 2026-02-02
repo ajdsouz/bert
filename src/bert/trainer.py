@@ -125,9 +125,9 @@ class Trainer:
                     epoch_steps += 1
                     total_loss += loss_scaled.item()
 
-
+                    current_lr = self.optimizer.param_groups[0]['lr']
                     self.logger.info(f"Train epoch: {self.epoch} step: {self.global_step} Tokens seen: {tokens_seen} Train Loss: {loss.item()}")
-                    wandb.log({'train_loss': loss.item(), 'tokens_seen': tokens_seen, 'epoch': self.epoch, 'step': self.global_step}, step=self.global_step)
+                    wandb.log({'train_loss': loss.item(), 'tokens_seen': tokens_seen, 'lr': current_lr, 'epoch': self.epoch, 'step': self.global_step}, step=self.global_step)
                 
                     # --------- evaluation ---------
                     if self.global_step % eval_every == 0 and val_dataloader and self.global_step > 0 or epoch_steps == len(train_dataloader):
