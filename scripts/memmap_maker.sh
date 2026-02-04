@@ -9,4 +9,4 @@ uv run python scripts/memmap_maker.py \
     --val_ratio=0.1 \
     --batch_size=8 \
     --num_proc=4 \
-    --tokenizer="answerdotai/ModernBERT-base" \
+    --tokenizer="FacebookAI/roberta-base" \
