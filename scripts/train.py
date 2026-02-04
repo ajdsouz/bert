@@ -1,5 +1,5 @@
 from bert.model import BertEncoder, ModelConfig
-from bert.dataset import TokenDataset
+from bert.dataset import TokenDataset, TokenDatasetV2
 from bert.trainer import Trainer
 
 import argparse
@@ -44,8 +44,11 @@ collate_fn = DataCollatorForLanguageModeling(
     mlm_probability=0.15
 )
 
-train_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_train_tokens)
-valid_ds = TokenDataset(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_val_tokens)
+BOS_TOKEN_ID = tokenizer.bos_token_id
+EOS_TOKEN_ID = tokenizer.eos_token_id
+
+train_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_train_tokens, bos_token_id=BOS_TOKEN_ID, eos_token_id=EOS_TOKEN_ID)
+valid_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_val_tokens, bos_token_id=BOS_TOKEN_ID, eos_token_id=EOS_TOKEN_ID)
 
 train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
 valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)

@@ -1,7 +1,7 @@
 # !/bin/bash
 
 uv run scripts/train.py \
-    --model="answerdotai/ModernBERT-base" \
+    --model="FacebookAI/roberta-base" \
     --memmap_path='test_data' \
     --batch_size=1 \
     --block_size=128 \
@@ -16,7 +16,7 @@ uv run scripts/train.py \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="custom trainer pure torch no mixed precision" \
+    --wandb_run_name="custom trainer pure torch no mixed precision with BOS and EOS" \
     --device="cpu" \
     --grad_accumulation_steps=4 \
     --num_epochs=1 \
