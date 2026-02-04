@@ -10,13 +10,13 @@ uv run scripts/train.py \
     --n_heads=4 \
     --n_layer=2 \
     --dropout=0.0 \
-    --vocab_size=50368 \
+    --vocab_size=50265 \
     --lr=5e-5 \
     --checkpoint_dir='ckpt' \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="custom trainer pure torch no mixed precision with BOS and EOS" \
+    --wandb_run_name="custom trainer pure torch no mixed precision without BOS and EOS" \
     --device="cpu" \
     --grad_accumulation_steps=4 \
     --num_epochs=1 \

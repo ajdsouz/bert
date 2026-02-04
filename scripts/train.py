@@ -4,10 +4,11 @@ from bert.trainer import Trainer
 
 import argparse
 import dataclasses
+import math
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from transformers import DataCollatorForLanguageModeling, AutoTokenizer
+from transformers import DataCollatorForLanguageModeling, AutoTokenizer, get_linear_schedule_with_warmup
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str)
@@ -21,6 +22,9 @@ parser.add_argument('--n_layer', type=int)
 parser.add_argument('--dropout', type=float)
 parser.add_argument('--vocab_size', type=int)
 parser.add_argument('--lr', type=float)
+parser.add_argument('--beta1', type=float)
+parser.add_argument('--beta2', type=float)
+parser.add_argument('--weight_decay', type=float)
 parser.add_argument('--checkpoint_dir', type=str)
 parser.add_argument('--log_file', type=str)
 parser.add_argument('--wandb_entity', type=str)
@@ -50,6 +54,9 @@ EOS_TOKEN_ID = tokenizer.eos_token_id
 train_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_train_tokens, bos_token_id=BOS_TOKEN_ID, eos_token_id=EOS_TOKEN_ID)
 valid_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_val_tokens, bos_token_id=BOS_TOKEN_ID, eos_token_id=EOS_TOKEN_ID)
 
+# train_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_train_tokens)
+# valid_ds = TokenDataset(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_val_tokens)
+
 train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
 valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
 
@@ -74,14 +81,25 @@ bertconfig = ModelConfig(
 
 print(dataclasses.asdict(bertconfig))
 
+
+TOTAL_OPTIMIZER_STEPS = math.ceil((len(train_dl) / args.grad_accumulation_steps) * args.num_epochs)
+WARMUP_STEPS = max(1, int(0.05 * TOTAL_OPTIMIZER_STEPS))
+
 model = BertEncoder(bertconfig)
-optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
+scheduler = get_linear_schedule_with_warmup(
+    optimizer=optimizer,
+    num_warmup_steps=WARMUP_STEPS,
+    num_training_steps=TOTAL_OPTIMIZER_STEPS
+)
+
 loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 trainer = Trainer(
     config=bertconfig,
     model = model,
     loss_fn=loss_fn,
     optimizer=optimizer,
+    scheduler=scheduler,
     checkpoint_dir=args.checkpoint_dir,
     log_file=args.log_file,
     wandb_entity=args.wandb_entity,
