@@ -5,12 +5,21 @@ import torch.nn as nn
 import torch.nn.functional as F 
 
 from .functional import attention, split_heads, merge_heads
+from .config import ModelConfig
+
+ACT2FN = {
+    'relu': nn.ReLU,
+    'leakyrelu': nn.LeakyReLU,
+    'silu': nn.SiLU,
+    'tanh': nn.Tanh,
+    'gelu': nn.GELU,
+}
 
 class FFN(nn.Module):
-    def __init__(self, d_model: int, d_ffn: int, bias: bool = False):
+    def __init__(self, config: ModelConfig):
         super().__init__()
-        self.fc1: nn.Linear = nn.Linear(in_features=d_model, out_features=d_ffn, bias=True)
-        self.fc2: nn.Linear = nn.Linear(in_features=d_ffn, out_features=d_model, bias=True)
+        self.fc1: nn.Linear = nn.Linear(in_features=config.d_model, out_features=config.d_ffn, bias=True)
+        self.fc2: nn.Linear = nn.Linear(in_features=config.d_ffn, out_features=config.d_model, bias=True)
 
     def forward(self, x: Tensor) -> Tensor:
         """Feed-forward layer with ReLU activation
@@ -23,21 +32,32 @@ class FFN(nn.Module):
         """
         return self.fc2(F.relu(self.fc1(x)))
 
+class GatedMLP(nn.Module):
+    def __init__(self, config: ModelConfig):
+        super().__init__()
+        self.up_proj: nn.Linear = nn.Linear(in_features=config.d_model, out_features=config.d_ffn, bias=True)
+        self.gate_proj: nn.Linear = nn.Linear(in_features=config.d_model, out_features=config.d_ffn, bias=True)
+        self.down_proj: nn.Linear = nn.Linear(in_features=config.d_ffn, out_features=config.d_model, bias=True)
+        self.activation: nn.Module = ACT2FN[config.activation]()
+
+    def forward(self, x: torch.Tensor):
+        x, swish = self.up_proj(x), self.activation(self.gate_proj(x))
+        down_proj = self.down_proj(x * swish)
+        return down_proj
+
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, d_model : int, n_heads : int, log_attention : bool =False):
+    def __init__(self, config: ModelConfig):
         super().__init__()
         # TODO : add functionality to log attention scores for interp
-
-        self.d_model = d_model
-        self.n_heads = n_heads
-        self.d_heads = self.d_model // self.n_heads
-        self.log_attention : bool = log_attention
+        self.n_heads = config.n_heads
+        self.d_heads = config.d_model // config.n_heads
+        # self.log_attention : bool = log_attention
         self.softmax = nn.Softmax(dim=-1)
-        self.out_proj: nn.Linear = nn.Linear(self.d_model, self.d_model)
-        self.Wq : nn.Linear = nn.Linear(self.d_model, self.d_model)
-        self.Wk : nn.Linear = nn.Linear(self.d_model, self.d_model)
-        self.Wv : nn.Linear= nn.Linear(self.d_model, self.d_model)
+        self.out_proj: nn.Linear = nn.Linear(config.d_model, config.d_model)
+        self.Wq : nn.Linear = nn.Linear(config.d_model, config.d_model)
+        self.Wk : nn.Linear = nn.Linear(config.d_model, config.d_model)
+        self.Wv : nn.Linear= nn.Linear(config.d_model, config.d_model)
     
     def forward(self, x: Tensor, mask: Tensor) -> Tensor:
         """Multi-head attention
@@ -63,10 +83,10 @@ class MultiHeadAttention(nn.Module):
     
 
 class EmbeddingLayer(nn.Module):
-    def __init__(self, vocab_size: int, d_model: int):
+    def __init__(self, config: ModelConfig):
         super().__init__()
-        self.d_model = d_model
-        self.embedding_table: nn.Embedding = nn.Embedding(vocab_size, d_model)
+        self.d_model = config.d_model
+        self.embedding_table: nn.Embedding = nn.Embedding(config.vocab_size, config.d_model)
 
     def forward(self, token_ids: Tensor) -> Tensor:
         """Embedding layer for word embeddings. Does not have positional information.
@@ -82,17 +102,17 @@ class EmbeddingLayer(nn.Module):
         return math.sqrt(self.d_model) * embeddings
 
 class SinusoidalPositionalEncoding(nn.Module):
-    def __init__(self, d_model: int, block_size: int):
+    def __init__(self, config: ModelConfig):
         super().__init__()
-        position: Tensor = torch.arange(block_size).unsqueeze(1)
+        position: Tensor = torch.arange(config.block_size).unsqueeze(1)
         div_terms: Tensor = torch.exp(
-            torch.arange(0, d_model, 2) * (-torch.log(torch.tensor(10000.0)) / d_model)
+            torch.arange(0, config.d_model, 2) * (-torch.log(torch.tensor(10000.0)) / config.d_model)
         )
-        pe: Tensor = torch.zeros(block_size, d_model)
+        pe: Tensor = torch.zeros(config.block_size, config.d_model)
         pe[:,0::2] = torch.sin(position * div_terms)
         pe[:,1::2] = torch.cos(position * div_terms)
 
-        self.register_buffer("pe", pe.unsqueeze(0))
+        self.register_buffer("pe", pe.unsqueeze(0), persistent=False)
 
 
     def forward(self, x: Tensor) -> Tensor:
@@ -106,17 +126,23 @@ class SinusoidalPositionalEncoding(nn.Module):
         """
         return x + self.pe[:, :x.size(1), :]
 
+MLP2FN = {
+    'vanilla' : FFN,
+    'gated' : GatedMLP,
+}
 
 class EncoderLayer(nn.Module):
-    def __init__(self, d_model: int, n_heads: int, d_ffn: int):
+    def __init__(self, config: ModelConfig):
         super().__init__()
-        self.d_model = d_model
-        self.d_ffn = d_ffn
-        self.n_heads = n_heads
-        self.ln1: nn.LayerNorm = nn.LayerNorm(self.d_model)
-        self.ln2: nn.LayerNorm = nn.LayerNorm(self.d_model)
-        self.mha: MultiHeadAttention = MultiHeadAttention(self.d_model, self.n_heads)
-        self.ffn: FFN = FFN(self.d_model, self.d_ffn)
+        # DONE : added MLP2FN to experiment with multiple mlp types. rn supports vanilla mlp and gated mlp
+        # TODO : add flexible NORM2FN to experiment with multiple types.
+        # Done : add norm_position feature to switch between pre and post norm.
+
+        self.config = config
+        self.ln1: nn.LayerNorm = nn.LayerNorm(config.d_model)
+        self.ln2: nn.LayerNorm = nn.LayerNorm(config.d_model)
+        self.mha: MultiHeadAttention = MultiHeadAttention(config)
+        self.mlp: FFN = MLP2FN[config.mlp_type](config)
     
     def forward(self, x: Tensor, mask: Tensor) -> Tensor:
         """Encoder layer / block for encoder models
@@ -127,12 +153,17 @@ class EncoderLayer(nn.Module):
         Returns:
             Tensor: Tensor Output
         """
-        x = self.ln1(
-            x + self.mha(x, mask)
-        )
-        return self.ln2(
-            x + self.ffn(x)
-        )
+        hidden_state = x
+        if self.config.norm_position == 'postnorm':
+            hidden_state = self.ln1(
+                hidden_state + self.mha(x, mask)
+            )
+            return self.ln2(
+                hidden_state + self.mlp(hidden_state)
+            )
+        else:
+            hidden_state = hidden_state + self.mha(self.ln1(x), mask)
+            return hidden_state + self.mlp(self.ln2(hidden_state))
 
 
 

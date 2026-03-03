@@ -9,9 +9,15 @@ uv run scripts/train.py \
     --d_ffn=512 \
     --n_heads=4 \
     --n_layer=2 \
+    --activation='silu' \
+    --mlp_type='gated' \
+    --norm_position='prenorm' \
     --dropout=0.0 \
     --vocab_size=50265 \
     --lr=5e-5 \
+    --beta1=0.9 \
+    --beta2=0.99 \
+    --weight_decay=0.05 \
     --checkpoint_dir='ckpt' \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \

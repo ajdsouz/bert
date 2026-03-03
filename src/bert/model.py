@@ -1,10 +1,11 @@
 from .layers import EmbeddingLayer, SinusoidalPositionalEncoding, EncoderLayer
+from .config import ModelConfig
 from dataclasses import dataclass
 from torch import Tensor
 import torch.nn as nn
 import torch.nn.functional as F
 
-@dataclass
+"""@dataclass
 class ModelConfig:
     block_size: int  
     d_model: int
@@ -12,7 +13,7 @@ class ModelConfig:
     n_heads: int
     n_layer: int
     dropout: float
-    vocab_size: int
+    vocab_size: int"""
 
 """class BERTTestConfig(BERTConfigTemplate):
     block_size: int = 64
@@ -37,10 +38,10 @@ class BertEncoder(nn.Module):
         super().__init__()
         self.config = config
         self.transformer = nn.ModuleDict(dict(
-                spe = SinusoidalPositionalEncoding(d_model=config.d_model, block_size=config.block_size),
-                wte = EmbeddingLayer(vocab_size=config.vocab_size, d_model=config.d_model),
+                spe = SinusoidalPositionalEncoding(config=config),
+                wte = EmbeddingLayer(config=config),
                 h = nn.ModuleList([
-            EncoderLayer(d_model=config.d_model, n_heads=config.n_heads, d_ffn=config.d_ffn) for _ in range(config.n_layer)
+            EncoderLayer(config=config) for _ in range(config.n_layer)
                 ]),
                 ln_f = nn.LayerNorm(config.d_model)
             ))

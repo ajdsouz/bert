@@ -21,6 +21,9 @@ parser.add_argument('--n_heads', type=int)
 parser.add_argument('--n_layer', type=int)
 parser.add_argument('--dropout', type=float)
 parser.add_argument('--vocab_size', type=int)
+parser.add_argument('--activation', type=str)
+parser.add_argument('--mlp_type', type=str)
+parser.add_argument('--norm_position', type=str)
 parser.add_argument('--lr', type=float)
 parser.add_argument('--beta1', type=float)
 parser.add_argument('--beta2', type=float)
@@ -76,7 +79,10 @@ bertconfig = ModelConfig(
     n_heads=args.n_heads,
     n_layer=args.n_layer,
     dropout=args.dropout,
-    vocab_size=args.vocab_size
+    vocab_size=args.vocab_size,
+    activation=args.activation,
+    mlp_type=args.mlp_type,
+    norm_position=args.norm_position
 )
 
 print(dataclasses.asdict(bertconfig))
