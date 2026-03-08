@@ -47,7 +47,7 @@ for weight_decay in weight_decays:
                 "--norm_position", f"{args.norm_position}",
                 "--lr", f"{args.lr}",
                 "--beta1", f"{beta1}",
-                "--beta2", "0.98"
+                "--beta2", "0.98",
                 "--checkpoint_dir", f"{checkpoint_dir}",
                 "--log_file", f"{logfile_path}",
                 "--wandb_entity", "tororo",

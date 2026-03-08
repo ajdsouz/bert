@@ -1,6 +1,6 @@
 import argparse
 from datasets import Dataset, load_dataset
-from transformers import AutoTokenizer
+from transformers import PreTrainedTokenizer, AutoTokenizer
 # import torch
 import numpy as np
 from tqdm import tqdm
@@ -23,7 +23,7 @@ args = parser.parse_args()
 
 def memmap_dataset(
     memmap_file_path: str | Path,
-    tokenizer: AutoTokenizer,
+    tokenizer: PreTrainedTokenizer,
     dataset: Dataset,
     input_columns: str | list[str],
     num_tokenizing_proc: int = 0,
@@ -43,8 +43,10 @@ def memmap_dataset(
     """
 
     def process(batch)-> dict:
-        tokens = tokenizer(batch[input_columns], padding=False, truncation=False)
-        input_ids = tokens['input_ids']
+        tokens = tokenizer(batch[input_columns], padding=False, truncation=False, add_special_tokens=False)
+        # input_ids = tokens['input_ids']
+        sep = tokenizer.sep_token_id
+        input_ids = [ids + [sep] for ids in tokens['input_ids']]
         return {
             'token_ids': input_ids,
             'len': [len(t) for t in input_ids]
@@ -78,6 +80,11 @@ def memmap_dataset(
 def make_memmap_dataset(args: argparse.Namespace) -> None:
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
     # dataset = load_dataset(*args.dataset_args, split=args.dataset_split)
+    special_tokens = {'sep_token': '<sep>'}
+    tokenizer.add_special_tokens(special_tokens)
+    print("<sep> token is: ", tokenizer.sep_token)
+    print("<sep> token id is: ", tokenizer.sep_token_id)
+    tokenizer.save_pretrained("ckpt/tokenizer/")
     subset = None if args.subset=="None" else args.subset
     print(f"using {args.tokenizer} on {args.dataset} subset {args.subset} column {args.dataset_columns}")
     dataset = load_dataset(args.dataset, subset)
