@@ -8,7 +8,7 @@ import math
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from transformers import DataCollatorForLanguageModeling, AutoTokenizer, get_linear_schedule_with_warmup
+from transformers import DataCollatorForLanguageModeling, AutoTokenizer, get_cosine_schedule_with_warmup
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str)
@@ -54,6 +54,12 @@ collate_fn = DataCollatorForLanguageModeling(
 BOS_TOKEN_ID = tokenizer.bos_token_id
 EOS_TOKEN_ID = tokenizer.eos_token_id
 
+# Add a unique sep token.
+assert tokenizer.eos_token_id == tokenizer.sep_token_id
+tokenizer.add_special_tokens({"sep_token": "<sep>"})
+assert tokenizer.sep_token_id+1 == len(tokenizer) == args.vocab_size == 50266
+
+
 train_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_train_tokens, bos_token_id=BOS_TOKEN_ID, eos_token_id=EOS_TOKEN_ID)
 valid_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_val_tokens, bos_token_id=BOS_TOKEN_ID, eos_token_id=EOS_TOKEN_ID)
 
@@ -92,12 +98,13 @@ TOTAL_OPTIMIZER_STEPS = math.ceil((len(train_dl) / args.grad_accumulation_steps)
 WARMUP_STEPS = max(1, int(0.05 * TOTAL_OPTIMIZER_STEPS))
 
 model = BertEncoder(bertconfig)
-optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
-scheduler = get_linear_schedule_with_warmup(
-    optimizer=optimizer,
-    num_warmup_steps=WARMUP_STEPS,
-    num_training_steps=TOTAL_OPTIMIZER_STEPS
-)
+optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+scheduler = torch.optim.lr_scheduler.ConstantLR(optimizer, 1.0)
+#scheduler = get_cosine_schedule_with_warmup(
+#    optimizer=optimizer,
+#    num_warmup_steps=WARMUP_STEPS,
+#    num_training_steps=TOTAL_OPTIMIZER_STEPS
+#)
 
 loss_fn = nn.CrossEntropyLoss(ignore_index=-100)
 trainer = Trainer(

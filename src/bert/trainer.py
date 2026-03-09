@@ -2,7 +2,7 @@ from .model import ModelConfig
 
 import wandb
 import logging
-import argparse
+from pathlib import Path
 from tqdm import tqdm
 import dataclasses
 import torch
@@ -31,7 +31,8 @@ class Trainer:
         self.optimizer = optimizer
         self.scheduler = scheduler
         self.compile = compile
-        self.checkpoint_dir = checkpoint_dir
+        self.checkpoint_dir = Path(checkpoint_dir)
+        self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
         self.config = config
         self.epoch: int = 0
         self.global_step: int = 0
@@ -39,10 +40,10 @@ class Trainer:
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
 
-        handler = logging.FileHandler(log_file, encoding="utf-8", mode="a")
         formatter = logging.Formatter("{levelname:<8} {message}", style="{")
-        handler.setFormatter(formatter)
-        if not self.logger.handlers:
+        if log_file and not self.logger.handlers:
+            handler = logging.FileHandler(log_file, encoding="utf-8", mode="a")
+            handler.setFormatter(formatter)
             self.logger.addHandler(handler)
 
         # if self.compile:
@@ -150,7 +151,7 @@ class Trainer:
         raise NotImplementedError
 
     def save_checkpoint(self):
-        save_path = f"{self.checkpoint_dir}/checkpoint_epoch-{self.epoch}-step-{self.global_step}.pth"
+        save_path = self.checkpoint_dir / f"checkpoint_epoch-{self.epoch}-step-{self.global_step}.pth"
         torch.save({
             "epoch": self.epoch,
             "global_step": self.global_step,

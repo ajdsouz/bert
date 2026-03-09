@@ -99,7 +99,7 @@ class EmbeddingLayer(nn.Module):
             Tensor: Word embeddings
         """
         embeddings = self.embedding_table(token_ids)
-        return math.sqrt(self.d_model) * embeddings
+        return embeddings
 
 class SinusoidalPositionalEncoding(nn.Module):
     def __init__(self, config: ModelConfig):

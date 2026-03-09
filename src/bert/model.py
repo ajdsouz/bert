@@ -46,6 +46,20 @@ class BertEncoder(nn.Module):
                 ln_f = nn.LayerNorm(config.d_model)
             ))
         self.head = nn.Linear(in_features=config.d_model, out_features=config.vocab_size)        
+        self.apply(self._init_weights)
+        self.head.weight = self.transformer.wte.embedding_table.weight
+
+    @staticmethod
+    def _init_weights(module):
+        if isinstance(module, nn.Linear):
+            nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            if module.bias is not None:
+                nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            nn.init.normal_(module.weight, mean=0.0, std=0.02)
+        elif isinstance(module, nn.LayerNorm):
+            nn.init.zeros_(module.bias)
+            nn.init.ones_(module.weight)
 
     def forward(self, input_ids: Tensor, attention_mask: Tensor):
         """Bert model implementation
