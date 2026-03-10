@@ -97,7 +97,22 @@ print(dataclasses.asdict(bertconfig))
 TOTAL_OPTIMIZER_STEPS = math.ceil((len(train_dl) / args.grad_accumulation_steps) * args.num_epochs)
 WARMUP_STEPS = max(1, int(0.05 * TOTAL_OPTIMIZER_STEPS))
 
-model = BertEncoder(bertconfig)
+
+from transformers import AutoConfig, BertForMaskedLM
+class BaselineHFModel(torch.nn.Module):
+    def __init__(self, path: str = "google/bert_uncased_L-8_H-512_A-8"):
+        super().__init__()
+        self.config = AutoConfig.from_pretrained(path)
+        self.config.vocab_size = args.vocab_size
+        self.backbone = BertForMaskedLM._from_config(self.config)
+
+    def forward(self, input_ids, attention_mask):
+        outputs = self.backbone(input_ids, attention_mask)
+        return outputs.logits
+
+
+model = BaselineHFModel()
+#model = BertEncoder(bertconfig)
 optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 scheduler = torch.optim.lr_scheduler.ConstantLR(optimizer, 1.0)
 #scheduler = get_cosine_schedule_with_warmup(
