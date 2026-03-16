@@ -1,0 +1,11 @@
+model:  # size: 51,533,402
+  type: HuggingfaceModelForMlm
+  base_config:
+    type: HuggingfaceModel
+    device: cuda
+    dtype: float32
+    vocab_size: 50266
+    max_sequence_length: 512
+    output_hidden_states: false
+    output_attentions: false
+    hf_repo: google/bert_uncased_L-8_H-512_A-8

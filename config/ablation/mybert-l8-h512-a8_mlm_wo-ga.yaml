@@ -1,0 +1,16 @@
+model:  # size: 59,676,250
+  type: MyBertModelForMlm
+  base_config:
+    type: MyBertModel
+    device: cuda
+    dtype: float32
+    vocab_size: 50266
+    max_sequence_length: 512
+    output_hidden_states: false
+    output_attentions: false
+    hidden_size: 512
+    num_encoder_layers: 8
+    num_attention_heads: 8
+    gated_attention: false
+    mlp_type: gated(gelu)
+  tie_word_embeddings: true
