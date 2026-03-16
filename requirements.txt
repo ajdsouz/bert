@@ -1,0 +1,10 @@
+# python==3.13.11
+--extra-index-url https://download.pytorch.org/whl/cu128
+accelerate==1.13.0
+evaluate==0.4.6
+jaxtyping==0.3.9
+scikit-learn==1.8.0
+torch==2.9.1+cu128
+transformers==5.3.0
+typeguard==2.13.3
+wandb==0.25.1

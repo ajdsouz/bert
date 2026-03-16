@@ -1,20 +1,13 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.tokens
-*.egg-info
-notes/
-wandb/
-ckpt/
-logs/
-# Virtual environments
-.venv
+# Python & IDE
+__pycache__
+/.venv
+/.vscode
 
-# IDE
-.vscode/
+# Large
+/data
+/results
 
-# Temporary folders
-tmp/
+# Misc
+/logs
+/tmp
+/wandb
