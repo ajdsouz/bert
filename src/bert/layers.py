@@ -52,6 +52,7 @@ class MultiHeadAttention(nn.Module):
         # TODO : add functionality to log attention scores for interp
         self.n_heads = config.n_heads
         self.d_heads = config.d_model // config.n_heads
+        self.dropout = config.attention_dropout
         # self.log_attention : bool = log_attention
         self.softmax = nn.Softmax(dim=-1)
         self.out_proj: nn.Linear = nn.Linear(config.d_model, config.d_model)
@@ -75,7 +76,7 @@ class MultiHeadAttention(nn.Module):
         if mask is not None:
             mask = mask[:, None, None, :] # autobroadcast to [B, H, S, S]
 
-        att, weights = attention(q, k, v, mask=mask)
+        att, weights = attention(q, k, v, mask=mask, p=self.dropout)
 
         attention_out = merge_heads(att)
 

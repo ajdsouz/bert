@@ -40,10 +40,12 @@ class BertEncoder(nn.Module):
         self.transformer = nn.ModuleDict(dict(
                 spe = SinusoidalPositionalEncoding(config=config),
                 wte = EmbeddingLayer(config=config),
+                ln_e = nn.LayerNorm(normalized_shape=config.d_model, eps=config.layernorm_eps),
+                dropout_e = nn.Dropout(p=config.hidden_dropout),
                 h = nn.ModuleList([
             EncoderLayer(config=config) for _ in range(config.n_layer)
                 ]),
-                ln_f = nn.LayerNorm(config.d_model)
+                ln_f = nn.LayerNorm(config.d_model, eps=config.layernorm_eps)
             ))
         self.head = nn.Linear(in_features=config.d_model, out_features=config.vocab_size)        
 
@@ -58,6 +60,7 @@ class BertEncoder(nn.Module):
         """
         tok_emb = self.transformer.wte(input_ids)
         x = self.transformer.spe(tok_emb)
+        x = self.transformer.ln_e(x)
         for block in self.transformer.h:
             x = block(x, attention_mask)
         x = self.transformer.ln_f(x)

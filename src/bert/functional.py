@@ -8,6 +8,7 @@ def attention(
         key: Tensor, 
         value: Tensor, 
         scale: float | None = None, 
+        p: float | None = None,
         mask : Tensor | None = None
 ) -> tuple[Tensor, Tensor]:
     """Computes attention score as in https://arxiv.org/abs/1706.03762
@@ -32,6 +33,7 @@ def attention(
         scores = scores.masked_fill(mask==0, value=float('-inf'))
     
     attention_weights = F.softmax(scores, -1)
+    attention_weights = F.dropout(attention_weights, p=p)
     attention = attention_weights @ value 
 
     return attention, attention_weights

@@ -12,7 +12,9 @@ uv run scripts/train.py \
     --activation='silu' \
     --mlp_type='gated' \
     --norm_position='prenorm' \
-    --dropout=0.0 \
+    --attention_dropout=0.1 \
+    --hidden_dropout=0.1 \
+    --layernorm_eps=1e-12 \
     --vocab_size=50265 \
     --lr=5e-5 \
     --beta1=0.9 \
@@ -22,7 +24,7 @@ uv run scripts/train.py \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="mac test" \
+    --wandb_run_name="added hidden and attention dropout and layernorm eps" \
     --device="mps" \
     --grad_accumulation_steps=4 \
     --num_epochs=1 \
