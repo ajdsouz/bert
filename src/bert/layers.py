@@ -20,7 +20,7 @@ class FFN(nn.Module):
         super().__init__()
         self.fc1: nn.Linear = nn.Linear(in_features=config.d_model, out_features=config.d_ffn, bias=True)
         self.fc2: nn.Linear = nn.Linear(in_features=config.d_ffn, out_features=config.d_model, bias=True)
-
+        self.dropout: nn.Dropout = nn.Dropout(p=config.hidden_dropout)
     def forward(self, x: Tensor) -> Tensor:
         """Feed-forward layer with ReLU activation
 
