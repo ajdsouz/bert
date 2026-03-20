@@ -18,3 +18,5 @@ logs/
 
 # Temporary folders
 tmp/
+
+.log

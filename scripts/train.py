@@ -1,4 +1,4 @@
-from bert.model import BertEncoder, ModelConfig
+from bert.model import BertEncoder, ModelConfig, BertModel, BertForMLM
 from bert.dataset import TokenDataset, TokenDatasetV2
 from bert.trainer import Trainer
 
@@ -26,6 +26,7 @@ parser.add_argument('--vocab_size', type=int)
 parser.add_argument('--activation', type=str)
 parser.add_argument('--mlp_type', type=str)
 parser.add_argument('--norm_position', type=str)
+parser.add_argument('--norm_type', type=str)
 parser.add_argument('--lr', type=float)
 parser.add_argument('--beta1', type=float)
 parser.add_argument('--beta2', type=float)
@@ -86,7 +87,8 @@ bertconfig = ModelConfig(
     vocab_size=args.vocab_size,
     activation=args.activation,
     mlp_type=args.mlp_type,
-    norm_position=args.norm_position
+    norm_position=args.norm_position,
+    norm_type=args.norm_type
 )
 
 print(dataclasses.asdict(bertconfig))
@@ -95,7 +97,7 @@ print(dataclasses.asdict(bertconfig))
 TOTAL_OPTIMIZER_STEPS = math.ceil((len(train_dl) / args.grad_accumulation_steps) * args.num_epochs)
 WARMUP_STEPS = max(1, int(0.05 * TOTAL_OPTIMIZER_STEPS))
 
-model = BertEncoder(bertconfig)
+model = BertForMLM(bertconfig)
 optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
 scheduler = get_linear_schedule_with_warmup(
     optimizer=optimizer,

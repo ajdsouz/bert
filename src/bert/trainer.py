@@ -158,3 +158,45 @@ class Trainer:
             "optimizer": self.optimizer.state_dict(),
             "scheduler": self.scheduler.state_dict() if self.scheduler else None,
         }, save_path)
+
+
+class NERTaggerTrainer(Trainer):
+    def __init__():
+        super().__init__()
+        pass
+
+    def _common_step(self, batch):
+        pass
+
+
+class POSTaggerTrainer(Trainer):
+    def __init__():
+        super().__init__()
+        pass
+
+    def _common_step(self, batch):
+        pass    
+
+class QNLITrainer(Trainer):
+    def __init__():
+        super().__init__()
+        pass
+
+    def _common_step(self, batch):
+        pass   
+
+class SeqClsTrainer(Trainer):
+    def __init__():
+        super().__init__()
+        pass
+
+    def _common_step(self, batch):
+        pass   
+
+class QATrainer(Trainer):
+    def __init__():
+        super().__init__()
+        pass
+
+    def _common_step(self, batch):
+        pass   

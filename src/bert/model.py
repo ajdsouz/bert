@@ -1,4 +1,4 @@
-from .layers import EmbeddingLayer, SinusoidalPositionalEncoding, EncoderLayer
+from .layers import EmbeddingLayer, SinusoidalPositionalEncoding, EncoderLayer, NORM2FN
 from .config import ModelConfig
 from dataclasses import dataclass
 from torch import Tensor
@@ -32,37 +32,48 @@ class BERTBaseConfig(BERTConfigTemplate):
     dropout = 0.0
     vocab_size = 30522"""
 
-
-class BertEncoder(nn.Module):
+class BertModel(nn.Module):
     def __init__(self, config: ModelConfig):
         super().__init__()
         self.config = config
-        self.transformer = nn.ModuleDict(dict(
-                spe = SinusoidalPositionalEncoding(config=config),
-                wte = EmbeddingLayer(config=config),
-                ln_e = nn.LayerNorm(normalized_shape=config.d_model, eps=config.layernorm_eps),
-                dropout_e = nn.Dropout(p=config.hidden_dropout),
-                h = nn.ModuleList([
-            EncoderLayer(config=config) for _ in range(config.n_layer)
-                ]),
-                ln_f = nn.LayerNorm(config.d_model, eps=config.layernorm_eps)
-            ))
-        self.head = nn.Linear(in_features=config.d_model, out_features=config.vocab_size)        
+        self.wte = EmbeddingLayer(config)
+        self.wpe = SinusoidalPositionalEncoding(config)
+        if config.norm_position == "postnorm":
+            self.ln_e = NORM2FN[config.norm_type](config.d_model, eps=config.layernorm_eps)
+        else:
+            self.ln_f = NORM2FN[config.norm_type](config.d_model, eps=config.layernorm_eps)
+        self.dropout_e = nn.Dropout(config.hidden_dropout)
+        self.layers = nn.ModuleList(
+            EncoderLayer(config) for _ in range(config.n_layer)
+        )
+        
 
     def forward(self, input_ids: Tensor, attention_mask: Tensor):
-        """Bert model implementation
+        x = self.wpe(self.wte(input_ids))
 
-        Args:
-            input_ids (Tensor): tokenizer output [Batch Sequence]
+        if self.config.norm_position == 'postnorm':
+            x = self.ln_e(x)
 
-        Returns:
-            _type_: model output [Batch Sequence Vocab]
-        """
-        tok_emb = self.transformer.wte(input_ids)
-        x = self.transformer.spe(tok_emb)
-        x = self.transformer.ln_e(x)
-        for block in self.transformer.h:
-            x = block(x, attention_mask)
-        x = self.transformer.ln_f(x)
-        logits = self.head(x)
+        x = self.dropout_e(x)
+        for layer in self.layers:
+            x = layer(x, attention_mask)
+
+        if self.config.norm_position == 'prenorm':
+            x = self.ln_f(x)
+        
+        return x
+    
+class BertForMLM(nn.Module):
+    def __init__(self, config: ModelConfig):
+        super().__init__()
+        self.config = config
+        self.model = BertModel(config)
+        self.lm_head = nn.Linear(config.d_model, config.vocab_size)
+        self.lm_head.weight = self.model.wte.embedding_table.weight
+
+    def forward(self, input_ids, attentin_mask):
+        x = self.model(input_ids, attentin_mask)
+        logits = self.lm_head(x)
         return logits
+
+

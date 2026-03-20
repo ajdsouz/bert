@@ -13,5 +13,5 @@ class ModelConfig:
     activation: str
     mlp_type: str
     layernorm_eps: float
-    #norm_type: str # TODO : add RMSNorm as well
+    norm_type: str 
     norm_position: str

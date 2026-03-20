@@ -12,6 +12,7 @@ uv run scripts/train.py \
     --activation='silu' \
     --mlp_type='gated' \
     --norm_position='prenorm' \
+    --norm_type='rmsnorm' \
     --attention_dropout=0.1 \
     --hidden_dropout=0.1 \
     --layernorm_eps=1e-12 \
