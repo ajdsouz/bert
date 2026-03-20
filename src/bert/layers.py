@@ -87,6 +87,7 @@ class EmbeddingLayer(nn.Module):
         super().__init__()
         self.d_model = config.d_model
         self.embedding_table: nn.Embedding = nn.Embedding(config.vocab_size, config.d_model)
+        nn.init.normal_(self.embedding_table.weight, mean=0.0, std=0.02)
 
     def forward(self, token_ids: Tensor) -> Tensor:
         """Embedding layer for word embeddings. Does not have positional information.

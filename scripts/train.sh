@@ -1,9 +1,9 @@
 # !/bin/bash
 
 uv run scripts/train.py \
-    --model="FacebookAI/roberta-base" \
+    --model="ajdsouza/roberta-extended" \
     --memmap_path='test_data' \
-    --batch_size=1 \
+    --batch_size=2 \
     --block_size=128 \
     --d_model=256 \
     --d_ffn=512 \
@@ -22,8 +22,8 @@ uv run scripts/train.py \
     --log_file='logs/logfile.log' \
     --wandb_entity="tororo" \
     --wandb_project_name="BERT Pretraining Test" \
-    --wandb_run_name="custom trainer pure torch no mixed precision without BOS and EOS" \
-    --device="cpu" \
+    --wandb_run_name="mac test" \
+    --device="mps" \
     --grad_accumulation_steps=4 \
     --num_epochs=1 \
     --save_every=100 \

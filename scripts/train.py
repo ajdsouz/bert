@@ -60,8 +60,8 @@ valid_ds = TokenDatasetV2(memmap_path=f"{args.memmap_path}/validation.tokens", b
 # train_ds = TokenDataset(memmap_path=f"{args.memmap_path}/train.tokens", block_size=args.block_size, num_tokens=args.num_train_tokens)
 # valid_ds = TokenDataset(memmap_path=f"{args.memmap_path}/validation.tokens", block_size=args.block_size, num_tokens=args.num_val_tokens)
 
-train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
-valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4, collate_fn=collate_fn)
+train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=0, collate_fn=collate_fn)
+valid_dl = DataLoader(valid_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=0, collate_fn=collate_fn)
 
 """class BERTTestConfig(BERTConfigTemplate):
     block_size: int = args.block_size
